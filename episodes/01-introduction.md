@@ -25,7 +25,7 @@ Machine learning is a set of techniques that enable computers to use data to imp
 
 The term machine learning (ML) is often mentioned alongside artificial intelligence (AI) and deep learning (DL). Deep learning is a subset of machine learning, and machine learning is a subset of artificial intelligence.
 
-AI is a broad term used to describe a system possessing a "general intelligence" that can be applied to solve a diverse range of problems, often mimicking the behaviour of intelligent biological systems. Modern attempts are getting close to fooling humans, but while there have been great advances in AI and ML research, human-like intelligence is only possible in a few specialist areas. Despite this technical definition, AI is often used to describe ML and DL systems in general.
+AI is increasingly being used as a catch-all term to describe things that encompass ML and DL systems - from simple email spam filters, to more complex image recognition systems, to large language models such as ChatGPT. The more specific term "Artificial General Intelligence" (AGI) is used to describe a system possessing a "general intelligence" that can be applied to solve a diverse range of problems, often mimicking the behaviour of intelligent biological systems. Modern attempts at AGI are getting close to fooling humans, but while there have been great advances in AI research, human-like intelligence is only possible in a few specialist areas. 
 
 ML refers to techniques where a computer can "learn" patterns in data, usually by being shown many training examples. While ML algorithms can learn to solve specific problems, or multiple similar problems, they are not considered to possess a general intelligence. ML algorithms often need hundreds or thousands of examples to learn a task and are confined to activities such as simple classifications. A human-like system could learn much quicker than this, and potentially learn from a single example by using it's knowledge of many other problems.
 
@@ -104,13 +104,15 @@ Machine learning is about creating models from data: for that reason, we'll star
 
 Most machine learning algorithms implemented in scikit-learn expect data to be stored in a two-dimensional array or matrix. The arrays can be either numpy arrays, or in some cases scipy.sparse matrices. The size of the array is expected to be [n_samples, n_features]
 
+We typically have a "Features Matrix" (usually referred to as the code variable `X`) which are the "features" data we wish to train on. 
+
 * n_samples: The number of samples. A sample can be a document, a picture, a sound, a video, an astronomical object, a row in database or CSV file, or whatever you can describe with a fixed set of quantitative traits.
 * n_features: The number of features (variables) that can be used to describe each item in a quantitative manner. Features are generally real-valued, but may be boolean or discrete-valued in some cases.
 
+If we want our ML models to make predictions or classifications, we also provide "labels" as our expected "answers/results". The model will then be trained on the input features to try and match our provided labels. This is done by providing a "Target Array" (usually referred to as the code variable `y`) which contains the "labels or values" that we wish to predict using the features data.
+
 ![Types of Machine Learning](../fig/introduction/sklearn_input.png)
 Figure from the [Python Data Science Handbook](https://github.com/jakevdp/PythonDataScienceHandbook)
-
-If we want our ML models to make predictions or classifications, we also provide "labels" as our expected "answers/results". The model will then be trained on the input features to try and match our provided labels.
 
 # What will we cover today?
 
