@@ -44,7 +44,7 @@ Rather than evaluating this manually we can instead set aside some of our traini
 
 We lose a bit of training data in the process, But we can now easily evaluate the performance of our model. With more advanced test-train split techniques we can even recover this lost training data!
 
-> ### Why do we do this?
+> ## Why do we do this?
 > It's important to do this early, and to do all of your work with the training dataset - this avoids any risk of you introducing bias to the model based on your own manual observations of data in the testing set (afterall, we want the model to make the decisions about parameters!). This can also highlight when you are over-fitting on your training data.
 {: .callout}
 
@@ -54,7 +54,7 @@ For classification problems this means we should ensure that each class of inter
 
 In the previous regression episode we created the penguin training data by taking the first 146 samples our the dataset. Unfortunately the penguin data is sorted by species and so our training data only considered one type of penguin and thus was not representitive of the actual data we tried to fit. We could have avoided this issue by randomly shuffling our penguin samples before splitting the data.
 
-> ### When not to shuffle your data
+> ## When not to shuffle your data
 > Sometimes your data is dependant on it's ordering, such as time-series data where past values influence future predictions. Creating train-test splits for this can be tricky at first glance, but fortunately there are existing techniques to tackle this (often called stratification): See [Scikit-Learn](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators) for more information.
 {: .callout}
 
