@@ -37,6 +37,25 @@ For this lesson we will limit our dataset to only numerical values such as bill_
 
 The above table contains multiple categorical objects such as species. If we attempt to include the other categorical fields, island and sex, we might hinder classification performance due to the complexity of the data.
 
+### Preprocessing our data
+
+Lets do some pre-processing on our dataset and specify our `X` features and `Y` labels:
+
+~~~
+# Extract the data we need
+feature_names = ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']
+dataset.dropna(subset=feature_names, inplace=True)
+
+class_names = dataset['species'].unique()
+
+X = dataset[feature_names]
+
+Y = dataset['species']
+~~~
+{: .language-python}
+
+Having extracted our features `X` and labels `y`, we can now split the data using the `train_test_split` function.
+
 ## Training-testing split
 When undertaking any machine learning project, it's important to be able to evaluate how well your model works. 
 
@@ -58,22 +77,7 @@ In the previous regression episode we created the penguin training data by takin
 > Sometimes your data is dependant on it's ordering, such as time-series data where past values influence future predictions. Creating train-test splits for this can be tricky at first glance, but fortunately there are existing techniques to tackle this (often called stratification): See [Scikit-Learn](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators) for more information.
 {: .callout}
 
-Lets do some pre-processing on our dataset and specify our `X` features and `Y` labels:
-
-~~~
-# Extract the data we need
-feature_names = ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']
-dataset.dropna(subset=feature_names, inplace=True)
-
-class_names = dataset['species'].unique()
-
-X = dataset[feature_names]
-
-Y = dataset['species']
-~~~
-{: .language-python}
-
-Having extracted our features `X` and labels `y`, we can now split the data using the `train_test_split` function. We specify the fraction of data to use as test data, and the function randomly shuffles our data prior to splitting:
+ We specify the fraction of data to use as test data, and the function randomly shuffles our data prior to splitting:
 
 ~~~
 from sklearn.model_selection import train_test_split
