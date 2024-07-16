@@ -262,6 +262,81 @@ print(f'voting regressor: {voting_reg.score(X_test, y_test)}')
 
 We've had a look at a bagging approach but we'll now take a look at a stacking approach and apply it to a regression problem. We'll also introduce a new dataset to play around with. 
 
+### California house price prediction
+
+import sklearn
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+
+print(X.shape)
+print(y.shape)
+
+print(X.head())
+print("======================================")
+## Target is in units of 100,000
+print(y.head())
+
+# split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=5)
+
+print(f'train size: {X_train.shape}')
+print(f'test size: {X_test.shape}')
+
+from sklearn.ensemble import (
+    GradientBoostingRegressor,
+    RandomForestRegressor,
+    VotingRegressor,
+)
+from sklearn.linear_model import LinearRegression
+
+# training estimators 
+rf_reg = RandomForestRegressor(random_state=5)
+gb_reg = GradientBoostingRegressor(random_state=5)
+linear_reg = LinearRegression()
+voting_reg = VotingRegressor([("rf", rf_reg), ("gb", gb_reg), ("lr", linear_reg)])
+
+# fit voting estimator
+voting_reg.fit(X_train, y_train)
+
+# lets also train the individual models for comparison
+rf_reg.fit(X_train, y_train)
+gb_reg.fit(X_train, y_train)
+linear_reg.fit(X_train, y_train)
+
+import matplotlib.pyplot as plt
+
+# make predictions
+X_test_20 = X_test[:20] # first 20 for visualisation
+
+rf_pred = rf_reg.predict(X_test_20)
+gb_pred = gb_reg.predict(X_test_20)
+linear_pred = linear_reg.predict(X_test_20)
+voting_pred = voting_reg.predict(X_test_20)
+
+plt.figure()
+plt.plot(gb_pred,  "o", color="navy", label="GradientBoostingRegressor")
+plt.plot(rf_pred,  "o", color="blue", label="RandomForestRegressor")
+plt.plot(linear_pred,  "o", color="skyblue", label="LinearRegression")
+plt.plot(voting_pred,  "x", color="red", ms=10, label="VotingRegressor")
+
+plt.tick_params(axis="x", which="both", bottom=False, top=False, labelbottom=False)
+plt.ylabel("predicted")
+plt.xlabel("training samples")
+plt.legend(loc="best")
+plt.title("Regressor predictions and their average")
+
+plt.show()
+
+print(f'random forest: {rf_reg.score(X_test, y_test)}')
+
+print(f'gradient boost: {gb_reg.score(X_test, y_test)}')
+
+print(f'linear regression: {linear_reg.score(X_test, y_test)}')
+
+print(f'voting regressor: {voting_reg.score(X_test, y_test)}')
+
+
 ### The diabetes dataset 
 The diabetes dataset, contains 10 baseline variables for 442 diabetes patients where the target attribute is quantitative measure of disease progression one year after baseline. For more information see [Efron et al., (2004)](https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf). The useful thing about this data it is available as part of the [sci-kit learn library](https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset). We'll start by loading the dataset to very briefly inspect the attributes by printing them out.
 
