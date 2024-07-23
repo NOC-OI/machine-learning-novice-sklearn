@@ -173,7 +173,7 @@ There is still some overfitting indicated by the regions that contain only singl
 We've had a look at a bagging approach, but we'll now take a look at a stacking approach and apply it to a regression problem. We'll also introduce a new dataset to play around with. 
 
 ### California house price prediction
-The California housing dataset for regression problems contains 8 features such as, Median Income, House Age, Average Rooms, Average Bedrooms etc. for 20,640 properties. The target variable is the median house value for those 20,640 properties, note that all prices are in units of $100,000. This toy dataset is available as part of the [scikit learn library](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html). We'll start by loading the dataset to very briefly inspect the attributes by printing them out.
+The California housing dataset for regression problems contains 8 training features such as, Median Income, House Age, Average Rooms, Average Bedrooms etc. for 20,640 properties. The target variable is the median house value for those 20,640 properties, note that all prices are in units of $100,000. This toy dataset is available as part of the [scikit learn library](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html). We'll start by loading the dataset to very briefly inspect the attributes by printing them out.
 
 ~~~
 import sklearn
@@ -217,69 +217,6 @@ Lets stack a series of regression models. In the same way the RandomForest class
 
 We'll apply a Voting regressor to a random forest, gradient boosting and linear regressor.
 
-~~~
-from sklearn.ensemble import (
-    GradientBoostingRegressor,
-    RandomForestRegressor,
-    VotingRegressor,
-)
-from sklearn.linear_model import LinearRegression
-
-# Initialize estimators 
-rf_reg = RandomForestRegressor(random_state=5)
-gb_reg = GradientBoostingRegressor(random_state=5)
-linear_reg = LinearRegression()
-voting_reg = VotingRegressor([("rf", rf_reg), ("gb", gb_reg), ("lr", linear_reg)])
-
-# fit/train voting estimator
-voting_reg.fit(X_train, y_train)
-
-# lets also fit/train the individual models for comparison
-rf_reg.fit(X_train, y_train)
-gb_reg.fit(X_train, y_train)
-linear_reg.fit(X_train, y_train)
-~~~
-{: .language-python}
-
-~~~
-import matplotlib.pyplot as plt
-
-# make predictions
-X_test_20 = X_test[:20] # first 20 for visualisation
-
-rf_pred = rf_reg.predict(X_test_20)
-gb_pred = gb_reg.predict(X_test_20)
-linear_pred = linear_reg.predict(X_test_20)
-voting_pred = voting_reg.predict(X_test_20)
-
-plt.figure()
-plt.plot(gb_pred,  "o", color="navy", label="GradientBoostingRegressor")
-plt.plot(rf_pred,  "o", color="blue", label="RandomForestRegressor")
-plt.plot(linear_pred,  "o", color="skyblue", label="LinearRegression")
-plt.plot(voting_pred,  "x", color="red", ms=10, label="VotingRegressor")
-
-plt.tick_params(axis="x", which="both", bottom=False, top=False, labelbottom=False)
-plt.ylabel("predicted")
-plt.xlabel("training samples")
-plt.legend(loc="best")
-plt.title("Regressor predictions and their average")
-
-plt.show()
-~~~
-{: .language-python}
-
-
-~~~
-print(f'random forest: {rf_reg.score(X_test, y_test)}')
-
-print(f'gradient boost: {gb_reg.score(X_test, y_test)}')
-
-print(f'linear regression: {linear_reg.score(X_test, y_test)}')
-
-print(f'voting regressor: {voting_reg.score(X_test, y_test)}')
-~~~
-{: .language-python}
-
 Lets stack a series of regression models. In the same way the RandomForest classifier derives a results from a series of trees, we will combine the results from a series of different models in our stack. This is done using what's called an ensemble meta-estimator called a VotingRegressor. 
 
 We'll apply a Voting regressor to a random forest, gradient boosting and linear regressor.
@@ -306,23 +243,23 @@ from sklearn.ensemble import (
 )
 from sklearn.linear_model import LinearRegression
 
-# training estimators 
+# Initialize estimators 
 rf_reg = RandomForestRegressor(random_state=5)
 gb_reg = GradientBoostingRegressor(random_state=5)
 linear_reg = LinearRegression()
-voting_reg = VotingRegressor([("gb", rf_reg), ("rf", gb_reg), ("lr", linear_reg)])
+voting_reg = VotingRegressor([("rf", rf_reg), ("gb", gb_reg), ("lr", linear_reg)])
 
-# fit voting estimator
+# fit/train voting estimator
 voting_reg.fit(X_train, y_train)
 
-# lets also train the individual models for comparison
+# lets also fit/train the individual models for comparison
 rf_reg.fit(X_train, y_train)
 gb_reg.fit(X_train, y_train)
 linear_reg.fit(X_train, y_train)
 ~~~
 {: .language-python}
 
-We fit the voting regressor in the same way we would fit a single model. When the voting regressor is instantiated we pass it a parameter containing a list of tuples that contain the estimators we wish to stack: in this case the random forest, gradient boosting and linear regressors. To get a sense of what this is doing lets predict the first 20 samples in the test portion of the data and plot the results. 
+We fit the voting regressor in the same way we would fit a single model. When the voting regressor is instantiated we pass it a parameter containing a list of tuples that contain the estimators we wish to stack: in this case the random forest, gradient boosting and linear regressors. To get a sense of what this is doing lets predict the first 20 samples in the test portion of the data and plot the results.
 
 ~~~
 import matplotlib.pyplot as plt
@@ -347,15 +284,13 @@ plt.xlabel("training samples")
 plt.legend(loc="best")
 plt.title("Regressor predictions and their average")
 
-
 plt.show()
 ~~~
 {: .language-python}
 
 ![Regressor predictions and average from stack](../fig/house_price_voting_regressor.svg)
 
-
-FInally, lets see how the average compares against each single estimator in the stack? 
+Finally, lets see how the average compares against each single estimator in the stack? 
 
 ~~~
 print(f'random forest: {rf_reg.score(X_test, y_test)}')
@@ -368,7 +303,7 @@ print(f'voting regressor: {voting_reg.score(X_test, y_test)}')
 ~~~
 {: .language-python}
 
-Each of our models score 0.61-0.82, which is a good accuracy score, do note that the toy datasets are not representative of real world data. However what we can see is that the stacked result generated by the voting regressor fits different sub-models and then averages the individual predictions to form a final prediction. The benefit of this approach is that it reduces overfitting and increases generalizability. Of course, we could try and improve our accuracy score by tweaking with our indivdual model hyperparameters, using more advaced boosted models or adjusting our training data features and train-test-split data.
+Each of our models score between 0.61-0.82, which at the high end is good, but at the low end is a pretty poor prediction accuracy score. Do note that the toy datasets are not representative of real world data. However what we can see is that the stacked result generated by the voting regressor fits different sub-models and then averages the individual predictions to form a final prediction. The benefit of this approach is that, it reduces overfitting and increases generalizability. Of course, we could try and improve our accuracy score by tweaking with our indivdual model hyperparameters, using more advaced boosted models or adjusting our training data features and train-test-split data.
 
 > ## Exercise: Stacking a classification problem.
 > Scikit learn also has method for stacking ensemble classifiers ```sklearn.ensemble.VotingClassifier``` do you think you could apply a stack to the penguins dataset using a random forest, SVM and decision tree classifier, or a selection of any other classifier estimators available in sci-kit learn? 
