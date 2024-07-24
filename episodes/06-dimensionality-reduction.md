@@ -170,14 +170,7 @@ plot_clusters(x_pca, clusters)
 And now we can compare how these clusters look against our actual image labels by colour coding our first scatter plot:
 
 ~~~
-tx = x_pca[:, 0]
-ty = x_pca[:, 1]
-
-fig = plt.figure(1, figsize=(5, 4))
-plt.scatter(tx, ty, c=labels, cmap="nipy_spectral", 
-        edgecolor='k',label=labels)
-plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
-plt.show()
+plot_clusters_labels(x_pca, labels)
 ~~~
 {: .language-python}
 
