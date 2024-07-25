@@ -40,10 +40,10 @@ def plots(x_manifold):
 
     # without labels
     fig = plt.figure(1, figsize=(4, 4))
-    plt.scatter(tx, ty, edgecolor='k',label=labels)
+    plt.scatter(tx, ty, edgecolor='k')
     plt.show()
 
-def plot_clusters(x_manifold, clusters):
+def plot_clusters(x_manifold, clusters, Kmean):
     tx = x_manifold[:, 0]
     ty = x_manifold[:, 1]
     fig = plt.figure(1, figsize=(4, 4))
@@ -62,7 +62,11 @@ def plot_clusters_labels(x_manifold, labels):
             edgecolor='k', label=labels)
     plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
     plt.show()
+~~~
+{: .language-python}
 
+Next lets load in the digits datasets,
+~~~
 # load in dataset as a Pandas Dataframe, return X and Y
 features, labels = datasets.load_digits(return_X_y=True, as_frame=True)
 
@@ -160,8 +164,8 @@ We now have a 2D representation of our 64D dataset that we can work with instead
 ~~~
 Kmean = skl_cluster.KMeans(n_clusters=10)
 Kmean.fit(x_pca)
-clusters = Kmean.predict(x_pca,labels)
-plot_clusters(x_pca, clusters)
+clusters = Kmean.predict(x_pca)
+plot_clusters(x_pca, clusters, Kmean)
 ~~~
 {: .language-python}
 
@@ -184,7 +188,7 @@ It's worth noting that PCA does not handle outlier data well primarily due to gl
 
 t-SNE is a powerful example of manifold learning - a non-deterministic non-linear approach to dimensionality reduction. Manifold learning tasks are based on the idea that the dimension of many datasets is artificially high. This is likely the case for our MNIST dataset, as the corner pixels of our images are unlikely to contain digit data, and thus those dimensions are almost negligable compared with others.
 
-The versatility of the algorithm in transforming the underlying structural information into lower-order projections makes t-SNE applicable to a wide range of research domains.  
+The versatility of the algorithm in transforming the underlying structural information into lower-order projections makes t-SNE applicable to a wide range of research domains.
 
 For more in depth explanations of t-SNE and manifold learning please see the following links which also contain som very nice visual examples of manifold learning in action:
 * [https://thedatafrog.com/en/articles/visualizing-datasets/](https://thedatafrog.com/en/articles/visualizing-datasets/)
@@ -210,9 +214,9 @@ It looks like t-SNE has done a much better job of splitting our data up into clu
 Kmean = skl_cluster.KMeans(n_clusters=10)
 
 Kmean.fit(x_tsne)
-clusters = Kmean.predict(x_tsne,labels)
+clusters = Kmean.predict(x_tsne)
 
-plot_clusters(x_tsne, clusters)
+plot_clusters(x_tsne, clusters, Kmean)
 plot_clusters_labels(x_tsne, labels)
 ~~~
 {: .language-python}
