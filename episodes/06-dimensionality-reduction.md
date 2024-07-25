@@ -28,7 +28,40 @@ The MNIST dataset contains 70,000 images of handwritten numbers, and are labelle
 To make this episode a bit less computationally intensive, the Scikit-Learn example that we will work with is a smaller sample of 1797 images. Each image is 8x8 in size for a total of 64 pixels per image, resulting in 64 features for us to work with. The pixels can take a value between 0-15 (4bits). Let's retrieve and inspect the Scikit-Learn dataset with the following code:
 
 ~~~
-from sklearn import datasets
+import numpy as np
+import matplotlib.pyplot as plt
+import sklearn.cluster as skl_cluster
+from sklearn import manifold, decomposition, datasets
+
+# Let's define these here to avoid repetitive code
+def plots(x_manifold):
+    tx = x_manifold[:, 0]
+    ty = x_manifold[:, 1]
+
+    # without labels
+    fig = plt.figure(1, figsize=(4, 4))
+    plt.scatter(tx, ty, edgecolor='k',label=labels)
+    plt.show()
+
+def plot_clusters(x_manifold, clusters):
+    tx = x_manifold[:, 0]
+    ty = x_manifold[:, 1]
+    fig = plt.figure(1, figsize=(4, 4))
+    plt.scatter(tx, ty, s=5, linewidth=0, c=clusters)
+    for cluster_x, cluster_y in Kmean.cluster_centers_:
+        plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
+    plt.show()
+
+def plot_clusters_labels(x_manifold, labels):
+    tx = x_manifold[:, 0]
+    ty = x_manifold[:, 1]
+
+    # with labels
+    fig = plt.figure(1, figsize=(5, 4))
+    plt.scatter(tx, ty, c=labels, cmap="nipy_spectral", 
+            edgecolor='k', label=labels)
+    plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
+    plt.show()
 
 # load in dataset as a Pandas Dataframe, return X and Y
 features, labels = datasets.load_digits(return_X_y=True, as_frame=True)
@@ -49,8 +82,6 @@ As humans we are pretty good at object and pattern recognition. We can look at t
 > 
 > > ## Solution
 > > ~~~
-> > import matplotlib.pyplot as plt
-> > import numpy as np
 > > 
 > > print(features.iloc[0])
 > > image_1D = features.iloc[0]
@@ -107,12 +138,9 @@ For more in depth explanations of PCA please see the following links:
 Let's apply PCA to the MNIST dataset and retain the two most-major components: 
 
 ~~~
-from sklearn import decomposition
-
 # PCA with 2 components
 pca = decomposition.PCA(n_components=2)
-pca.fit(features)
-x_pca = pca.transform(features)
+x_pca = pca.fit_transform(features)
 
 print(x_pca.shape)
 ~~~
@@ -121,16 +149,7 @@ print(x_pca.shape)
 This returns us an array of 1797x2 where the 2 remaining columns(our new "features" or "dimensions") contain vector representations of the first principle components (column 0) and second principle components (column 1) for each of the images. We can plot these two new features against each other:
 
 ~~~
-import numpy as np
-import matplotlib.pyplot as plt
-
-tx = x_pca[:, 0]
-ty = x_pca[:, 1]
-
-# without labels
-fig = plt.figure(1, figsize=(4, 4))
-plt.scatter(tx, ty, edgecolor='k',label=labels)
-plt.show()
+plots(x_pca)
 ~~~
 {: .language-python}
 
@@ -139,18 +158,10 @@ plt.show()
 We now have a 2D representation of our 64D dataset that we can work with instead. Let's try some quick K-means clustering on our 2D representation of the data. Because we already have some knowledge about our data we can set `k=10` for the 10 digits present in the dataset.
 
 ~~~
-import sklearn.cluster as skl_cluster
-
 Kmean = skl_cluster.KMeans(n_clusters=10)
-
 Kmean.fit(x_pca)
 clusters = Kmean.predict(x_pca,labels)
-
-fig = plt.figure(1, figsize=(4, 4))
-plt.scatter(tx, ty, s=5, linewidth=0, c=clusters)
-for cluster_x, cluster_y in Kmean.cluster_centers_:
-    plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
-plt.show()
+plot_clusters(x_pca, clusters)
 ~~~
 {: .language-python}
 
@@ -159,11 +170,7 @@ plt.show()
 And now we can compare how these clusters look against our actual image labels by colour coding our first scatter plot:
 
 ~~~
-fig = plt.figure(1, figsize=(5, 4))
-plt.scatter(tx, ty, c=labels, cmap="nipy_spectral", 
-        edgecolor='k',label=labels)
-plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
-plt.show()
+plot_clusters_labels(x_pca, labels)
 ~~~
 {: .language-python}
 
@@ -186,45 +193,27 @@ For more in depth explanations of t-SNE and manifold learning please see the fol
 Scikit-Learn allows us to apply t-SNE in a relatively simple way. Lets code and apply t-SNE to the MNIST dataset in the same manner that we did for the PCA example, and reduce the data down from 64D to 2D again:
 
 ~~~
-from sklearn import manifold
-
 # t-SNE embedding
 # initialising with "pca" explicitly preserves global structure
 tsne = manifold.TSNE(n_components=2, init='pca', random_state = 0)
 x_tsne = tsne.fit_transform(features)
 
-
-fig = plt.figure(1, figsize=(4, 4))
-plt.scatter(x_tsne[:, 0], x_tsne[:, 1], edgecolor='k')
-plt.show()
+plots(x_tsne)
 ~~~
 {: .language-python}
 
 ![Reduction using PCA](../fig/tsne_unlabelled.png)
 
-
 It looks like t-SNE has done a much better job of splitting our data up into clusters using only a 2D representation of the data. Once again, let's run a simple k-means clustering on this new 2D representation, and compare with the actual color-labelled data:
 
 ~~~
-import sklearn.cluster as skl_cluster
-
 Kmean = skl_cluster.KMeans(n_clusters=10)
 
 Kmean.fit(x_tsne)
 clusters = Kmean.predict(x_tsne,labels)
 
-fig = plt.figure(1, figsize=(4, 4))
-plt.scatter(x_tsne[:,0], x_tsne[:,1], s=5, linewidth=0, c=clusters)
-for cluster_x, cluster_y in Kmean.cluster_centers_:
-    plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
-plt.show()
-
-# with labels
-fig = plt.figure(1, figsize=(5, 4))
-plt.scatter(x_tsne[:, 0], x_tsne[:, 1], c=labels, cmap="nipy_spectral", 
-        edgecolor='k',label=labels)
-plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
-plt.show()
+plot_clusters(x_tsne, clusters)
+plot_clusters_labels(x_tsne, labels)
 ~~~
 {: .language-python}
 

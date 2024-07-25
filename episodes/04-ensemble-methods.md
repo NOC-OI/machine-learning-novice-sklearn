@@ -166,25 +166,35 @@ plt.show()
 
 ![random forest clf space](../fig/EM_rf_clf_space.png)
 
-There is still some overfitting indicated by the regions that contain only single points but using the same hyper-parameter settings used to fit the decision tree classifier, we can see that overfitting is reduced. 
+There is still some overfitting indicated by the regions that contain only single points but using the same hyper-parameter settings used to fit the decision tree classifier, we can see that overfitting is reduced.
 
 ## Stacking a regression problem
 
-We've had a look at a bagging approach but we'll now take a look at a stacking approach and apply it to a regression problem. We'll also introduce a new dataset to play around with. 
+We've had a look at a bagging approach, but we'll now take a look at a stacking approach and apply it to a regression problem. We'll also introduce a new dataset to play around with. 
 
-### The diabetes dataset 
-The diabetes dataset, contains 10 baseline variables for 442 diabetes patients where the target attribute is quantitative measure of disease progression one year after baseline. For more information see [Efron et al., (2004)](https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf). The useful thing about this data it is available as part of the [sci-kit learn library](https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset). We'll start by loading the dataset to very briefly inspect the attributes by printing them out.
+### California house price prediction
+The California housing dataset for regression problems contains 8 training features such as, Median Income, House Age, Average Rooms, Average Bedrooms etc. for 20,640 properties. The target variable is the median house value for those 20,640 properties, note that all prices are in units of $100,000. This toy dataset is available as part of the [scikit learn library](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html). We'll start by loading the dataset to very briefly inspect the attributes by printing them out.
 
 ~~~
-from sklearn.datasets import load_diabetes
+import sklearn
+from sklearn.datasets import fetch_california_housing
 
-print(load_diabetes())
+# load the dataset
+X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+
+## All price variables are in units of $100,000
+print(X.shape)
+print(X.head())
+
+print("Housing price as the target: ")
+
+## Target is in units of $100,000
+print(y.head())
+print(y.shape)
 ~~~
 {: .language-python}
 
-For more details on this SKLearn dataset see [this link for details.](https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset)
-
-For the the purposes of learning how to create and use ensemble methods we are about to commit a cardinal sin of machine learning and blindly use this dataset without inspecting it any further.
+For the the purposes of learning how to create and use ensemble methods and since it is a toy dataset, we will blindly use this dataset without inspecting it, cleaning or pre-processing it further. 
 
 > ## Exercise: Investigate and visualise the dataset
 > For this episode we simply want to learn how to build and use an Ensemble rather than actually solve a regression problem. To build up your skills as an ML practitioner, investigate and visualise this dataset. What can you say about the dataset itself, and what can you summarise about about any potential relationships or prediction problems?
@@ -193,18 +203,19 @@ For the the purposes of learning how to create and use ensemble methods we are a
 Lets start by splitting the dataset into training and testing subsets:
 
 ~~~
+# split into train and test sets, We are selecting an 80%-20% train-test split.
 from sklearn.model_selection import train_test_split
 
-# load in data
-X, y = load_diabetes(return_X_y=True)
-
-# split into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=5)
 
 print(f'train size: {X_train.shape}')
 print(f'test size: {X_test.shape}')
 ~~~
 {: .language-python}
+
+Lets stack a series of regression models. In the same way the RandomForest classifier derives a results from a series of trees, we will combine the results from a series of different models in our stack. This is done using what's called an ensemble meta-estimator called a VotingRegressor. 
+
+We'll apply a Voting regressor to a random forest, gradient boosting and linear regressor.
 
 Lets stack a series of regression models. In the same way the RandomForest classifier derives a results from a series of trees, we will combine the results from a series of different models in our stack. This is done using what's called an ensemble meta-estimator called a VotingRegressor. 
 
@@ -232,24 +243,23 @@ from sklearn.ensemble import (
 )
 from sklearn.linear_model import LinearRegression
 
-# training estimators 
+# Initialize estimators 
 rf_reg = RandomForestRegressor(random_state=5)
 gb_reg = GradientBoostingRegressor(random_state=5)
 linear_reg = LinearRegression()
-voting_reg = VotingRegressor([("gb", rf_reg), ("rf", gb_reg), ("lr", linear_reg)])
+voting_reg = VotingRegressor([("rf", rf_reg), ("gb", gb_reg), ("lr", linear_reg)])
 
-# fit voting estimator
+# fit/train voting estimator
 voting_reg.fit(X_train, y_train)
 
-# lets also train the individual models for comparison
+# lets also fit/train the individual models for comparison
 rf_reg.fit(X_train, y_train)
 gb_reg.fit(X_train, y_train)
 linear_reg.fit(X_train, y_train)
-
 ~~~
 {: .language-python}
 
-We fit the voting regressor in the same way we would fit a single model. When the voting regressor is instantiated we pass it a parameter containing a list of tuples that contain the estimators we wish to stack: in this case the random forest, gradient boosting and linear regressors. To get a sense of what this is doing lets predict the first 20 samples in the test portion of the data and plot the results. 
+We fit the voting regressor in the same way we would fit a single model. When the voting regressor is instantiated we pass it a parameter containing a list of tuples that contain the estimators we wish to stack: in this case the random forest, gradient boosting and linear regressors. To get a sense of what this is doing lets predict the first 20 samples in the test portion of the data and plot the results.
 
 ~~~
 import matplotlib.pyplot as plt
@@ -263,9 +273,9 @@ linear_pred = linear_reg.predict(X_test_20)
 voting_pred = voting_reg.predict(X_test_20)
 
 plt.figure()
-plt.plot(rf_pred,  "o", color="navy", label="GradientBoostingRegressor")
-plt.plot(gb_pred,  "o", color="blue", label="RandomForestRegressor")
-plt.plot(linear_pred,  "o", color="skyblue", label="LinearRegression")
+plt.plot(gb_pred,  "o", color="black", label="GradientBoostingRegressor")
+plt.plot(rf_pred,  "o", color="blue", label="RandomForestRegressor")
+plt.plot(linear_pred,  "o", color="green", label="LinearRegression")
 plt.plot(voting_pred,  "x", color="red", ms=10, label="VotingRegressor")
 
 plt.tick_params(axis="x", which="both", bottom=False, top=False, labelbottom=False)
@@ -278,10 +288,9 @@ plt.show()
 ~~~
 {: .language-python}
 
-![Regressor predictions and average from stack](../fig/EM_stacked_plot.png)
+![Regressor predictions and average from stack](../fig/house_price_voting_regressor.svg)
 
-
-FInally, lets see how the average compares against each single estimator in the stack? 
+Finally, lets see how the average compares against each single estimator in the stack? 
 
 ~~~
 print(f'random forest: {rf_reg.score(X_test, y_test)}')
@@ -294,11 +303,10 @@ print(f'voting regressor: {voting_reg.score(X_test, y_test)}')
 ~~~
 {: .language-python}
 
-Each of our models score a pretty poor 0.52-0.53, which is barely better than a coin flip. However what we can see is that the stacked result generated by the voting regressor produces a slightly improved score of 0.55, which is better than any of the three models/estimators taken individually. The whole model is greater than the sum of the individual parts. And of course, we could try and improve our accuracy score by tweaking with our indivdual model hyperparameters, or adjusting our training data features and train-test-split data.
-
+Each of our models score between 0.61-0.82, which at the high end is good, but at the low end is a pretty poor prediction accuracy score. Do note that the toy datasets are not representative of real world data. However what we can see is that the stacked result generated by the voting regressor fits different sub-models and then averages the individual predictions to form a final prediction. The benefit of this approach is that, it reduces overfitting and increases generalizability. Of course, we could try and improve our accuracy score by tweaking with our indivdual model hyperparameters, using more advaced boosted models or adjusting our training data features and train-test-split data.
 
 > ## Exercise: Stacking a classification problem.
-> Sci-kit learn also has method for stacking ensemble classifiers ```sklearn.ensemble.VotingClassifier``` do you think you could apply a stack to the penguins dataset using a random forest, SVM and decision tree classifier, or a selection of any other classifier estimators available in sci-kit learn? 
+> Scikit learn also has method for stacking ensemble classifiers ```sklearn.ensemble.VotingClassifier``` do you think you could apply a stack to the penguins dataset using a random forest, SVM and decision tree classifier, or a selection of any other classifier estimators available in sci-kit learn? 
 > 
 > ~~~
 > penguins = sns.load_dataset('penguins')
