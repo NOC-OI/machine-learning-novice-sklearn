@@ -34,27 +34,26 @@ import sklearn.cluster as skl_cluster
 from sklearn import manifold, decomposition, datasets
 
 # Let's define these here to avoid repetitive code
-def plots(x_manifold):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
-
-    # without labels
+def plots_labels(data, labels):
+    tx = data[:, 0]
+    ty = data[:, 1]
+    
     fig = plt.figure(1, figsize=(4, 4))
-    plt.scatter(tx, ty, edgecolor='k')
+    plt.scatter(tx, ty, edgecolor='k', c=labels)
     plt.show()
 
-def plot_clusters(x_manifold, clusters, Kmean):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
+def plot_clusters(data, clusters, Kmean):
+    tx = data[:, 0]
+    ty = data[:, 1]
     fig = plt.figure(1, figsize=(4, 4))
     plt.scatter(tx, ty, s=5, linewidth=0, c=clusters)
     for cluster_x, cluster_y in Kmean.cluster_centers_:
         plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
     plt.show()
 
-def plot_clusters_labels(x_manifold, labels):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
+def plot_clusters_labels(data, labels):
+    tx = data[:, 0]
+    ty = data[:, 1]
 
     # with labels
     fig = plt.figure(1, figsize=(5, 4))
@@ -65,7 +64,7 @@ def plot_clusters_labels(x_manifold, labels):
 ~~~
 {: .language-python}
 
-Next lets load in the digits datasets,
+Next lets load in the digits dataset,
 ~~~
 # load in dataset as a Pandas Dataframe, return X and Y
 features, labels = datasets.load_digits(return_X_y=True, as_frame=True)
@@ -153,7 +152,8 @@ print(x_pca.shape)
 This returns us an array of 1797x2 where the 2 remaining columns(our new "features" or "dimensions") contain vector representations of the first principle components (column 0) and second principle components (column 1) for each of the images. We can plot these two new features against each other:
 
 ~~~
-plots(x_pca)
+# We are passing None becuase it is an unlabelled plot
+plots_labels(x_pca, None)
 ~~~
 {: .language-python}
 
@@ -202,7 +202,7 @@ Scikit-Learn allows us to apply t-SNE in a relatively simple way. Lets code and 
 tsne = manifold.TSNE(n_components=2, init='pca', random_state = 0)
 x_tsne = tsne.fit_transform(features)
 
-plots(x_tsne)
+plots_labels(x_tsne, None)
 ~~~
 {: .language-python}
 
