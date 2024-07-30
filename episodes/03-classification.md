@@ -19,7 +19,14 @@ Classification is a supervised method to recognise and group data objects into a
 In this episode we are going to introduce the concept of supervised classification by classifying penguin data into different species of penguins using Scikit-Learn.
 
 ## The penguins dataset
-We're going to be using the penguins dataset of Allison Horst, published [here](https://github.com/allisonhorst/palmerpenguins) in 2020, which is comprised of 342 observations of three species of penguins: Adelie, Chinstrap & Gentoo. For each penguin we have measurements of bill length and depth (mm), flipper length (mm), body mass (g), and information on species, island, and sex.
+We're going to be using the penguins dataset of Allison Horst, published [here](https://github.com/allisonhorst/palmerpenguins), The dataset contains 344 size measurements for three penguin species (Chinstrap, Gentoo and Adélie) observed on three islands in the Palmer Archipelago, Antarctica.
+
+![*Artwork by @allison_horst*](../fig/palmer_penguins.png)
+
+The physical attributes measured are flipper length, beak length, beak width, body mass, and sex.
+![*Artwork by @allison_horst*](../fig/culmen_depth.png)
+
+In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
 
 ~~~
 import seaborn as sns
@@ -39,7 +46,7 @@ The above table contains multiple categorical objects such as species. If we att
 
 ### Preprocessing our data
 
-Lets do some pre-processing on our dataset and specify our `X` features and `Y` labels:
+Lets do some pre-processing on our dataset and specify our `X` features and `y` labels:
 
 ~~~
 # Extract the data we need
@@ -49,8 +56,7 @@ dataset.dropna(subset=feature_names, inplace=True)
 class_names = dataset['species'].unique()
 
 X = dataset[feature_names]
-
-Y = dataset['species']
+y = dataset['species']
 ~~~
 {: .language-python}
 
@@ -82,11 +88,11 @@ In the previous regression episode we created the penguin training data by takin
 ~~~
 from sklearn.model_selection import train_test_split
 
-x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 ~~~
 {: .language-python}
 
-We'll use `x_train` and `y_train` to develop our model, and only look at `x_test` and `y_test` when it's time to evaluate its performance.
+We'll use `X_train` and `y_train` to develop our model, and only look at `X_test` and `y_test` when it's time to evaluate its performance.
 
 ### Visualising the data
 In order to better understand how a model might classify this data, we can first take a look at the data visually, to see what patterns we might identify.
@@ -94,7 +100,7 @@ In order to better understand how a model might classify this data, we can first
 ~~~
 import matplotlib.pyplot as plt
 
-fig01 = sns.scatterplot(x_train, x=feature_names[0], y=feature_names[1], hue=dataset['species'])
+fig01 = sns.scatterplot(X_train, x=feature_names[0], y=feature_names[1], hue=dataset['species'])
 plt.show()
 ~~~
 {: .language-python}
@@ -125,9 +131,9 @@ Training and using a decision tree in Scikit-Learn is straightforward:
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 clf = DecisionTreeClassifier(max_depth=2)
-clf.fit(x_train, y_train)
+clf.fit(X_train, y_train)
 
-clf.predict(x_test)
+clf.predict(X_test)
 ~~~
 {: .language-python}
 
@@ -138,7 +144,7 @@ clf.predict(x_test)
 We can conveniently check how our model did with the .score() function, which will make predictions and report what proportion of them were accurate:
 
 ~~~
-clf_score = clf.score(x_test, y_test)
+clf_score = clf.score(X_test, y_test)
 print(clf_score)
 ~~~
 {: .language-python}
@@ -174,11 +180,11 @@ f1 = feature_names[0]
 f2 = feature_names[3]
 
 clf = DecisionTreeClassifier(max_depth=2)
-clf.fit(x_train[[f1, f2]], y_train)
+clf.fit(X_train[[f1, f2]], y_train)
 
-d = DecisionBoundaryDisplay.from_estimator(clf, x_train[[f1, f2]])
+d = DecisionBoundaryDisplay.from_estimator(clf, X_train[[f1, f2]])
 
-sns.scatterplot(x_train, x=f1, y=f2, hue=y_train, palette="husl")
+sns.scatterplot(X_train, x=f1, y=f2, hue=y_train, palette="husl")
 plt.show()
 ~~~
 {: .language-python}
@@ -199,8 +205,8 @@ max_depths = [1, 2, 3, 4, 5]
 accuracy = []
 for i, d in enumerate(max_depths):
     clf = DecisionTreeClassifier(max_depth=d)
-    clf.fit(x_train, y_train)
-    acc = clf.score(x_test, y_test)
+    clf.fit(X_train, y_train)
+    acc = clf.score(X_test, y_test)
 
     accuracy.append((d, acc))
 
@@ -221,7 +227,7 @@ Let's reuse our fitting and plotting codes from above to inspect a decision tree
 
 ~~~
 clf = DecisionTreeClassifier(max_depth=5)
-clf.fit(x_train, y_train)
+clf.fit(X_train, y_train)
 
 fig = plt.figure(figsize=(12, 10))
 plot_tree(clf, class_names=class_names, feature_names=feature_names, filled=True, ax=fig.gca())
@@ -237,11 +243,11 @@ f1 = feature_names[0]
 f2 = feature_names[3]
 
 clf = DecisionTreeClassifier(max_depth=5)
-clf.fit(x_train[[f1, f2]], y_train)
+clf.fit(X_train[[f1, f2]], y_train)
 
-d = DecisionBoundaryDisplay.from_estimator(clf, x_train[[f1, f2]])
+d = DecisionBoundaryDisplay.from_estimator(clf, X_train[[f1, f2]])
 
-sns.scatterplot(x_train, x=f1, y=f2, hue=y_train, palette='husl')
+sns.scatterplot(X_train, x=f1, y=f2, hue=y_train, palette='husl')
 plt.show()
 ~~~
 {: .language-python}
@@ -266,9 +272,9 @@ from sklearn import preprocessing
 import pandas as pd
 
 scalar = preprocessing.StandardScaler()
-scalar.fit(x_train)
-x_train_scaled = pd.DataFrame(scalar.transform(x_train), columns=x_train.columns, index=x_train.index)
-x_test_scaled = pd.DataFrame(scalar.transform(x_test), columns=x_test.columns, index=x_test.index)
+scalar.fit(X_train)
+X_train_scaled = pd.DataFrame(scalar.transform(X_train), columns=X_train.columns, index=X_train.index)
+X_test_scaled = pd.DataFrame(scalar.transform(X_test), columns=X_test.columns, index=X_test.index)
 ~~~
 {: .language-python}
 
@@ -280,9 +286,9 @@ With this scaled data, training the models works exactly the same as before.
 from sklearn import svm
 
 SVM = svm.SVC(kernel='poly', degree=3, C=1.5)
-SVM.fit(x_train_scaled, y_train)
+SVM.fit(X_train_scaled, y_train)
 
-svm_score = SVM.score(x_test_scaled, y_test)
+svm_score = SVM.score(X_test_scaled, y_test)
 print("Decision tree score is ", clf_score)
 print("SVM score is ", svm_score)
 ~~~
@@ -291,7 +297,7 @@ print("SVM score is ", svm_score)
 We can again visualise the decision space produced, also using only two parameters:
 
 ~~~
-x2 = x_train_scaled[[feature_names[0], feature_names[1]]]
+x2 = X_train_scaled[[feature_names[0], feature_names[1]]]
 
 SVM = svm.SVC(kernel='poly', degree=3, C=1.5)
 SVM.fit(x2, y_train)

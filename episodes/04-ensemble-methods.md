@@ -119,8 +119,7 @@ forest = RandomForestClassifier(n_estimators=100, max_depth=7, min_samples_leaf=
 # train our model
 forest.fit(X_train, y_train)
 
-# compare our models
-print(tree.score(X_test, y_test))
+# Score our model
 print(forest.score(X_test, y_test))
 ~~~
 {: .language-python}
@@ -153,10 +152,16 @@ We can see the first 5 (of 100) trees that were fitted as part of the forest.
 If we train the random forest estimator using the same two parameters used to plot the classification space for the decision tree classifier what do we think the plot will look like?
 
 ~~~
+# lets train a random forest for only two features (body mass and bill length)
+from sklearn.inspection import DecisionBoundaryDisplay
+f1 = feature_names[0]
+f2 = feature_names[3]
+
 # plot classification space for body mass and bill length with random forest
 forest_2d = RandomForestClassifier(n_estimators=100, max_depth=7, min_samples_leaf=1, random_state=5)
 forest_2d.fit(X_train[[f1, f2]], y_train)
 
+# Lets plot the decision boundaries made by the model for the two trained features
 d = DecisionBoundaryDisplay.from_estimator(forest_2d, X_train[[f1, f2]])
 
 sns.scatterplot(X_train, x=f1, y=f2, hue=y_train, palette="husl")

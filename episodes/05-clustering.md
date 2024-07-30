@@ -75,9 +75,31 @@ Now lets create some random blobs using the `make_blobs` function. The `n_sample
 ~~~
 import matplotlib.pyplot as plt
 
+#Lets define some functions here to avoid repetitive code
+def plots_labels(data, labels):
+    tx = data[:, 0]
+    ty = data[:, 1]
+
+    fig = plt.figure(1, figsize=(4, 4))
+    plt.scatter(tx, ty, edgecolor='k', c=labels)
+    plt.show()
+
+def plot_clusters(data, clusters, Kmean):
+    tx = data[:, 0]
+    ty = data[:, 1]
+    fig = plt.figure(1, figsize=(4, 4))
+    plt.scatter(tx, ty, s=5, linewidth=0, c=clusters)
+    for cluster_x, cluster_y in Kmean.cluster_centers_:
+        plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
+    plt.show()
+~~~
+{: .language-python}
+
+Lets create the clusters.
+
+~~~
 data, cluster_id = skl_datasets.make_blobs(n_samples=400, cluster_std=0.75, centers=4, random_state=1)
-plt.scatter(data[:,0], data[:,1], s=5, linewidth=0)
-plt.show()
+plots_labels(data, cluster_id)
 ~~~
 {: .language-python}
 
@@ -95,14 +117,13 @@ clusters = Kmean.predict(data)
 The data can now be plotted to show all the points we randomly generated. To make it clearer which cluster points have been classified we can set the colours (the c parameter) to use the `clusters` list that was returned by the `predict` function. The Kmeans algorithm also lets us know where it identified the centre of each cluster. These are stored as a list called 'cluster_centers_' inside the `Kmean` object. Let's plot the points from the clusters, colouring them by the output from the K-means algorithm, and also plot the centres of each cluster as a red X.
 
 ~~~
-plt.scatter(data[:, 0], data[:, 1], s=5, linewidth=0, c=clusters)
-for cluster_x, cluster_y in Kmean.cluster_centers_:
-    plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
-plt.show()
+plot_clusters(data, clusters, Kmean)
 ~~~
 {: .language-python}
 
 ![Plot of the fitted random clusters](../fig/random_clusters_centre.png)
+
+Here is the code all in a single block.
 
 ~~~
 import sklearn.cluster as skl_cluster
@@ -115,10 +136,7 @@ Kmean = skl_cluster.KMeans(n_clusters=4)
 Kmean.fit(data)
 clusters = Kmean.predict(data)
 
-plt.scatter(data[:, 0], data[:, 1], s=5, linewidth=0, c=clusters)
-for cluster_x, cluster_y in Kmean.cluster_centers_:
-    plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
-plt.show()
+plot_clusters(data, clusters, Kmean)
 ~~~
 {: .language-python}
 
@@ -207,8 +225,7 @@ Lets try out using Scikit-Learn's spectral clustering. To make the concentric ci
 import sklearn.datasets as skl_data
 
 circles, circles_clusters = skl_data.make_circles(n_samples=400, noise=.01, random_state=0)
-plt.scatter(circles[:, 0], circles[:, 1], s=15, linewidth=0)
-plt.show()
+plots_labels(circles, circles_clusters)
 ~~~
 {: .language-python}
 
@@ -222,8 +239,7 @@ The SpectralClustering class combines the fit and predict functions into a singl
 
 ~~~
 labels = model.fit_predict(circles)
-plt.scatter(circles[:, 0], circles[:, 1], s=15, linewidth=0, c=labels, cmap='flag')
-plt.show()
+plots_labels(circles, labels)
 ~~~
 {: .language-python}
 
@@ -241,14 +257,12 @@ Kmean.fit(circles)
 clusters = Kmean.predict(circles)
 
 # plot the data, colouring it by cluster
-plt.scatter(circles[:, 0], circles[:, 1], s=15, linewidth=0.1, c=clusters,cmap='flag')
-plt.show()
+plot_clusters(circles, clusters, Kmean)
 
 # cluster with spectral clustering
 model = skl_cluster.SpectralClustering(n_clusters=2, affinity='nearest_neighbors', assign_labels='kmeans')
 labels = model.fit_predict(circles)
-plt.scatter(circles[:, 0], circles[:, 1], s=15, linewidth=0, c=labels, cmap='flag')
-plt.show()
+plots_labels(circles, labels)
 ~~~
 {: .language-python}
 

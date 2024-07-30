@@ -34,27 +34,26 @@ import sklearn.cluster as skl_cluster
 from sklearn import manifold, decomposition, datasets
 
 # Let's define these here to avoid repetitive code
-def plots(x_manifold):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
-
-    # without labels
+def plots_labels(data, labels):
+    tx = data[:, 0]
+    ty = data[:, 1]
+    
     fig = plt.figure(1, figsize=(4, 4))
-    plt.scatter(tx, ty, edgecolor='k',label=labels)
+    plt.scatter(tx, ty, edgecolor='k', c=labels)
     plt.show()
 
-def plot_clusters(x_manifold, clusters):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
+def plot_clusters(data, clusters, Kmean):
+    tx = data[:, 0]
+    ty = data[:, 1]
     fig = plt.figure(1, figsize=(4, 4))
     plt.scatter(tx, ty, s=5, linewidth=0, c=clusters)
     for cluster_x, cluster_y in Kmean.cluster_centers_:
         plt.scatter(cluster_x, cluster_y, s=100, c='r', marker='x')
     plt.show()
 
-def plot_clusters_labels(x_manifold, labels):
-    tx = x_manifold[:, 0]
-    ty = x_manifold[:, 1]
+def plot_clusters_labels(data, labels):
+    tx = data[:, 0]
+    ty = data[:, 1]
 
     # with labels
     fig = plt.figure(1, figsize=(5, 4))
@@ -62,7 +61,11 @@ def plot_clusters_labels(x_manifold, labels):
             edgecolor='k', label=labels)
     plt.colorbar(boundaries=np.arange(11)-0.5).set_ticks(np.arange(10))
     plt.show()
+~~~
+{: .language-python}
 
+Next lets load in the digits dataset,
+~~~
 # load in dataset as a Pandas Dataframe, return X and Y
 features, labels = datasets.load_digits(return_X_y=True, as_frame=True)
 
@@ -149,7 +152,8 @@ print(x_pca.shape)
 This returns us an array of 1797x2 where the 2 remaining columns(our new "features" or "dimensions") contain vector representations of the first principle components (column 0) and second principle components (column 1) for each of the images. We can plot these two new features against each other:
 
 ~~~
-plots(x_pca)
+# We are passing None becuase it is an unlabelled plot
+plots_labels(x_pca, None)
 ~~~
 {: .language-python}
 
@@ -160,8 +164,8 @@ We now have a 2D representation of our 64D dataset that we can work with instead
 ~~~
 Kmean = skl_cluster.KMeans(n_clusters=10)
 Kmean.fit(x_pca)
-clusters = Kmean.predict(x_pca,labels)
-plot_clusters(x_pca, clusters)
+clusters = Kmean.predict(x_pca)
+plot_clusters(x_pca, clusters, Kmean)
 ~~~
 {: .language-python}
 
@@ -184,7 +188,7 @@ It's worth noting that PCA does not handle outlier data well primarily due to gl
 
 t-SNE is a powerful example of manifold learning - a non-deterministic non-linear approach to dimensionality reduction. Manifold learning tasks are based on the idea that the dimension of many datasets is artificially high. This is likely the case for our MNIST dataset, as the corner pixels of our images are unlikely to contain digit data, and thus those dimensions are almost negligable compared with others.
 
-The versatility of the algorithm in transforming the underlying structural information into lower-order projections makes t-SNE applicable to a wide range of research domains.  
+The versatility of the algorithm in transforming the underlying structural information into lower-order projections makes t-SNE applicable to a wide range of research domains.
 
 For more in depth explanations of t-SNE and manifold learning please see the following links which also contain som very nice visual examples of manifold learning in action:
 * [https://thedatafrog.com/en/articles/visualizing-datasets/](https://thedatafrog.com/en/articles/visualizing-datasets/)
@@ -198,7 +202,7 @@ Scikit-Learn allows us to apply t-SNE in a relatively simple way. Lets code and 
 tsne = manifold.TSNE(n_components=2, init='pca', random_state = 0)
 x_tsne = tsne.fit_transform(features)
 
-plots(x_tsne)
+plots_labels(x_tsne, None)
 ~~~
 {: .language-python}
 
@@ -210,9 +214,9 @@ It looks like t-SNE has done a much better job of splitting our data up into clu
 Kmean = skl_cluster.KMeans(n_clusters=10)
 
 Kmean.fit(x_tsne)
-clusters = Kmean.predict(x_tsne,labels)
+clusters = Kmean.predict(x_tsne)
 
-plot_clusters(x_tsne, clusters)
+plot_clusters(x_tsne, clusters, Kmean)
 plot_clusters_labels(x_tsne, labels)
 ~~~
 {: .language-python}
