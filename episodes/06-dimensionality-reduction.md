@@ -246,11 +246,11 @@ Our example here is still a relatively simple example of 8x8 images and not very
 > > from mpl_toolkits.mplot3d import Axes3D
 > > # PCA
 > > pca = decomposition.PCA(n_components=3)
-> > pca.fit(x)
-> > x_pca = pca.transform(x)
+> > pca.fit(features)
+> > x_pca = pca.transform(features)
 > > fig = plt.figure(1, figsize=(4, 4))
 > > ax = fig.add_subplot(projection='3d')
-> > ax.scatter(x_pca[:, 0], x_pca[:, 1], x_pca[:, 2], c=y,
+> > ax.scatter(x_pca[:, 0], x_pca[:, 1], x_pca[:, 2], c=labels,
 > >           cmap=plt.cm.nipy_spectral, s=9, lw=0)
 > > plt.show()
 > > ~~~
@@ -262,10 +262,10 @@ Our example here is still a relatively simple example of 8x8 images and not very
 > > # t-SNE embedding
 > > tsne = manifold.TSNE(n_components=3, init='pca',
 > >         random_state = 0)
-> > x_tsne = tsne.fit_transform(x)
+> > x_tsne = tsne.fit_transform(features)
 > > fig = plt.figure(1, figsize=(4, 4))
 > > ax = fig.add_subplot(projection='3d')
-> > ax.scatter(x_tsne[:, 0], x_tsne[:, 1], x_tsne[:, 2], c=y,
+> > ax.scatter(x_tsne[:, 0], x_tsne[:, 1], x_tsne[:, 2], c=labels,
 > >           cmap=plt.cm.nipy_spectral, s=9, lw=0)
 > > plt.show()
 > > ~~~
