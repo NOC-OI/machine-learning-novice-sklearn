@@ -45,23 +45,6 @@ pip install numpy pandas matplotlib opencv-python
 ~~~
 {: .language-bash}
 
-## Download the data
-
-Create a sub directory called data in the directory, then download the the following files to this directory:
-
-* [Gapminder Life Expectancy Data](data/gapminder-life-expectancy.csv)
-* [World Bank GDP Data](data/worldbank-gdp.csv)
-* [World Bank GDP Data with outliers](data/worldbank-gdp-outliers.csv)
-
-If you are using a Mac or Linux system the following commands will download this:
-
-~~~
-mkdir data
-cd data
-wget https://southampton-rsg-training.github.io/2024-09-29-machine-learning-novice-sklearn/data/gapminder-life-expectancy.csv
-wget https://southampton-rsg-training.github.io/2024-09-29-machine-learning-novice-sklearn/data/worldbank-gdp.csv
-wget https://southampton-rsg-training.github.io/2024-09-29-machine-learning-novice-sklearn/data/worldbank-gdp-outliers.csv
-~~~
-{: .language-bash}
+You'll need to re-activate the virtual environment to use it during the session.
 
 {% include links.md %}
