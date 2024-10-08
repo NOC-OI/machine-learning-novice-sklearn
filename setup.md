@@ -1,43 +1,50 @@
 ---
 title: Setup
 ---
-# Software Packages Required
+# Requirements
 
-You will need to have an installation of Python 3 with the matplotlib, pandas, numpy and optionally opencv packages. 
+## Software
 
-The [Anaconda Distribution](https://www.anaconda.com/products/individual#Downloads) includes all of these except opencv by default.
+You will need a terminal, Python 3.8+, and the ability to create Python virtual environments.
 
-## Installing OpenCV with Anaconda
+## Packages
 
-* Load the Anaconda Navigator
-* Click on "Environments" on the left hand side.
-* Choose "Not Installed" from the pull down menu next to the channels button.
-* Type "opencv" into the search box.
-* Tick the box next to the opencv package and then click apply. 
+You will need the MatPlotLib, Pandas, Numpy and OpenCV packages. 
 
-## Installing from the Anaconda command line
+# Setup
 
-From the Anaconda terminal run the command `conda install -c conda-forge opencv`
-
-# Download the data
-
-Please create a sub directory called data in the directory where you save any code you write.
-
-Download the the following files to this directory:
-
-* [Gapminder Life Expectancy Data](data/gapminder-life-expectancy.csv)
-* [World Bank GDP Data](data/worldbank-gdp.csv)
-* [World Bank GDP Data with outliers](data/worldbank-gdp-outliers.csv)
-
-If you are using a Mac or Linux system the following commands will download this:
+Create a new directory for the workshop, then launch a terminal in it:
 
 ~~~
-mkdir data
-cd data
-wget https://scw-aberystwyth.github.io/machine-learning-novice/data/worldbank-gdp.csv
-wget https://scw-aberystwyth.github.io/machine-learning-novice/data/worldbank-gdp-outliers.csv
-wget https://scw-aberystwyth.github.io/machine-learning-novice/data/gapminder-life-expectancy.csv
+mkdir workshop-ml
+cd workshop-ml
 ~~~
 {: .language-bash}
+
+## Creating a new Virtual Environment
+We'll install the prerequisites in a virtual environment, to prevent them from cluttering up your Python environment and causing conflicts.
+First, create a new directory and ent
+
+To create a new virtual environment for the project, open the terminal and type:
+
+~~~
+python3 -m venv venv
+~~~
+{: .language-bash}
+
+> If you're on Linux and this doesn't work, try installing `python3-venv` using your package manager, e.g. `sudo apt-get install python3-venv`.
+{: .info}
+
+## Installing your prerequisites
+
+Activate your virtual environment, and install the prerequisites:
+
+~~~
+source venv/bin/activate
+pip install numpy pandas matplotlib opencv-python
+~~~
+{: .language-bash}
+
+You'll need to re-activate the virtual environment to use it during the session.
 
 {% include links.md %}

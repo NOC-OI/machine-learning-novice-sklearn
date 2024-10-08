@@ -301,7 +301,7 @@ plt.show()
 
 Comparing the plots and errors it seems like a polynomial regression of N=2 is a far superior fit to Dataset II than a linear fit. In fact, it looks like our polynomial fit almost perfectly fits Dataset II... which is because Dataset II is created from a N=2 polynomial equation!
 
-> ## Exercise: Perform and compare linear and polynomial fits for Datasets I, III, and IV.
+> ## Exercise: Perform and compare linear and polynomial fits for Datasets I, II, III, and IV.
 > Which performs better for each dataset? Modify your polynomial regression function to take `N` as an input parameter to your regression model. How does changing the degree of polynomial fit affect each dataset?
 > > ## Solution
 > > ~~~
@@ -316,14 +316,49 @@ Comparing the plots and errors it seems like a polynomial regression of N=2 is a
 > > ~~~
 > > {: .language-python}
 > >
+> > ![Polynomial regression of dataset I](../fig/regress_polynomial_1st.png)
+> > ![Polynomial regression of dataset II](../fig/regress_polynomial_2nd.png)
+> > ![Polynomial regression of dataset III](../fig/regress_polynomial_3rd.png)
+> > ![Polynomial regression of dataset IV](../fig/regress_polynomial_4th.png)
+> > 
 > > The `N=2` polynomial fit is far better for Dataset II. According to the RMSE the polynomial is a slightly better fit for Datasets I and III, however it could be argued that a linear fit is good enough.
 > > Dataset III looks like a linear relation that has a single outlier, rather than a truly non-linear relation. The polynomial and linear fits perform just as well (or poorly) on Dataset IV.
 > > For Dataset IV it looks like `y` may be a better estimator of `x`, than `x` is at estimating `y`.
 > > ~~~
-> > def fit_poly_model(x_poly, y_data, N):
-> >     # Define our estimator/model(s)
+> > def pre_process_poly(x, y, N):
+> >     # sklearn requires a 2D array, so lets reshape our 1D arrays.
+> >     x_data = np.array(x).reshape(-1, 1)
+> >     y_data = np.array(y).reshape(-1, 1)
+> >
+> >     # create a polynomial representation of our data
 > >     poly_features = PolynomialFeatures(degree=N)
-> >     # ...
+> >     x_poly = poly_features.fit_transform(x_data)
+> >
+> >     return x_poly, x_data, y_data
+> >
+> > def plot_poly_model(x_data, poly_data, N):
+> >     # visualise!
+> >     plt.plot(x_data, poly_data, label="poly fit N=" + str(N))
+> >     plt.legend()
+> >
+> > def fit_predict_plot_poly(x, y, N):
+> >     # Combine all of the steps
+> >     x_poly, x_data, y_data = pre_process_poly(x, y, N)
+> >     poly_regress = fit_poly_model(x_poly, y_data)
+> >     poly_data = predict_poly_model(poly_regress, x_poly, y_data)
+> >     plot_poly_model(x_data, poly_data, N)
+> >
+> >     return poly_regress
+> >
+> > for ds in ["I","II","III","IV"]:
+> >     # Sort our data in order of our x (feature) values
+> >     data_ds = data[data["dataset"]==ds]
+> >     data_ds = data_ds.sort_values("x")
+> >     fit_predict_plot_linear(data_ds["x"],data_ds["y"])
+> >     for N in range(2,11):
+> >         print("Polynomial degree =",N)
+> >         fit_predict_plot_poly(data_ds["x"],data_ds["y"],N)
+> >     plt.show()
 > > ~~~
 > > {: .language-python}
 > >
@@ -344,6 +379,12 @@ Comparing the plots and errors it seems like a polynomial regression of N=2 is a
 > > With a large enough polynomial you can fit through every point with a unique `x` value.
 > > Datasets II and IV remain unchanged beyond `N=2` as the polynomial has converged (dataset II) or cannot model the data (Dataset IV).
 > > Datasets I and III slowly decrease their RMSE and N is increased, but it is likely that these more complex models are overfitting the data. Overfitting is discussed later in the lesson.
+> >
+> > ![Polynomial regression of dataset I with N between 1 and 10](../fig/regress_polynomial_n_1st.png)
+> > ![Polynomial regression of dataset II with N between 1 and 10](../fig/regress_polynomial_n_2nd.png)
+> > ![Polynomial regression of dataset III with N between 1 and 10](../fig/regress_polynomial_n_3rd.png)
+> > ![Polynomial regression of dataset IV with N between 1 and 10](../fig/regress_polynomial_n_4th.png)
+> >
 > {: .solution}
 {: .challenge}
 

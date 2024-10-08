@@ -266,6 +266,9 @@ plots_labels(circles, labels)
 ~~~
 {: .language-python}
 
+![Kmeans attempting to cluster the concentric circles](../fig/kmeans_concentric_circle_2.png)
+![Spectral clustering on the concentric circles](../fig/spectral_concentric_circle_2.png)
+
 
 > ## Comparing k-means and spectral clustering performance
 > Modify the program we wrote in the previous exercise to use spectral clustering instead of k-means and save it as a new file.
