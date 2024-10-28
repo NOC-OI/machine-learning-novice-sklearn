@@ -39,7 +39,7 @@ Regression can be as simple as drawing a "line of best fit" through data points,
 
 ![Example of linear and polynomial regressions](../fig/regression_example.png)
 
-### Linear regression using Scikit-Learn
+## Linear regression using Scikit-Learn
 
 We've had a lot of theory so time to start some actual coding! Let's create a regression model on some penguin data available through the Python plotting library [Seaborn](https://seaborn.pydata.org/). 
 
@@ -62,7 +62,9 @@ dataset.head()
 {: .language-python}
 
 
-In this scenario we will train a linear regression model using `body_mass_g` as our feature data and `bill_depth_mm` as our label data. We will train our model on a subset of the data by slicing the first 146 samples of our cleaned data. In machine learning we often train our models on a subset of data, for reasons we will explain later in this lesson, so let us extract a subset of data to work on by slicing the first 146 samples of our cleaned data and extracting our feature and label data:
+In this scenario we will train a linear regression model using `body_mass_g` as our feature data and `bill_depth_mm` as our label data. We will train our model on a subset of the data by slicing the first 146 samples of our cleaned data. 
+
+In machine learning we often train our models on a subset of data, for reasons we will explain later in this lesson, so let us extract a subset of data to work on by slicing the first 146 samples of our cleaned data and extracting our feature and label data:
 
 
 ~~~
@@ -82,11 +84,11 @@ plt.show()
 
 ![Comparison of the regressions of our dataset](../fig/penguin_regression.png)
 
-In this regression example we will create a Linear Regression model that will try to predict y values based upon x values.
+In this regression example we will create a Linear Regression model that will try to predict `y` values based upon `x` values.
 
-In machine learning terminology: we will use our x feature (variable) and y labels(“answers”) to train our Linear Regression model to predict y values when provided with x values.
+In machine learning terminology: we will use our `x` feature (variable) and `y` labels(“answers”) to train our Linear Regression model to predict `y` values when provided with `x` values.
 
-The mathematical equation for a linear fit is y = mx + c where y is our label data, x is our input feature(s), m represents the gradient of the linear fit, and c represents the intercept with the y-axis.
+The mathematical equation for a linear fit is `y = mx + c` where `y` is our label data, `x` is our input feature(s), `m` represents the gradient of the linear fit, and `c` represents the intercept with the y-axis.
 
 A typical ML workflow is as following:
 
@@ -104,7 +106,6 @@ import numpy as np
 # sklearn requires a 2D array, so lets reshape our 1D arrays from (N) to (N,).
 x_data = np.array(x_data).reshape(-1, 1)
 y_data = np.array(y_data).reshape(-1, 1)
-
 ~~~
 {: .language-python}
 
@@ -210,5 +211,11 @@ In this episode we chose to create a regression model for `bill_depth_mm` versus
 With enough data and by using more complex regression models we *may* be able to create a generalisable `bill_depth_mm` versus `body_mass_g` model for penguins, but it's important to be aware that some problems simply might not be solvable with the data quantity or features that you have. 
 
 In the next episode we will take a deeper dive into the penguin dataset as we attempt to create classification models for penguin species. 
+
+## STUB FOR POLYNOMIAL SECTION
+
+To be completed. This section will discuss how in machine learning non-linear problems are often converted into, or simply approximated by, linear representations. 
+
+It will quickly go through the motions of a scikit-learn polynomial fit, mostly to focus on the typical ML workflow with additional data pre-processing for model compatability.
 
 {% include links.md %}
