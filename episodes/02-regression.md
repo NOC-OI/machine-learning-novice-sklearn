@@ -212,10 +212,103 @@ With enough data and by using more complex regression models we *may* be able to
 
 In the next episode we will take a deeper dive into the penguin dataset as we attempt to create classification models for penguin species. 
 
-## STUB FOR POLYNOMIAL SECTION
+## Repeating the regression with different estimators
 
-To be completed. This section will discuss how in machine learning non-linear problems are often converted into, or simply approximated by, linear representations. 
+The goal of this lesson isn't to build a generalisable `bill_depth_mm` versus `body_mass_g` model for the penguin dataset - the goal is to give you some hands-on experience building machine learning models with scikit-learn. So let's repeat the above but this time using a polynomial function. 
 
-It will quickly go through the motions of a scikit-learn polynomial fit, mostly to focus on the typical ML workflow with additional data pre-processing for model compatability.
+Polynomial functions are non-linear functions that are commonly-used to model data. Mathematically they have `N` degrees of freedom and they take the following form `y = a + bx + cx^2 + dx^3 ... + mx^N`. If we have a polynomial of degree `N=1` we once again return to a linear equation `y = a + bx` or as it is more commonly written `y = mx + c`.
+
+We'll follow the same workflow from before:
+* Decide on a model to use model (also known as an estimator)
+* Tweak your data into the required format for your model
+* Define and train your model on the input data
+* Predict some values using the trained model
+* Check the accuracy of the prediction, and visualise the result
+
+We've decided to use a Polynomial estimator, so now let's tweak our dataset into the required format. For polynomial estimators in Scikit-Learn this is done in two steps. First we pre-process our input data `x_data` into a polynomial representation using the `PolynomialFeatures` function. Then we can create our polynomial regressions using the `LinearRegression().fit()` function as before, but this time using the polynomial representation of our `x_data`.
+
+~~~
+from sklearn.preprocessing import PolynomialFeatures
+
+# Requires sorted data for ordered polynomial lines 
+dataset = dataset.sort_values("body_mass_g")
+x_data = dataset["body_mass_g"]
+y_data = dataset["bill_depth_mm"]
+x_data = np.array(x_data).reshape(-1, 1)
+y_data = np.array(y_data).reshape(-1, 1)
+
+# create our training subset from every 10th sample
+x_data_subset = x_data[::10]
+y_data_subset = y_data[::10]
+
+# create a polynomial representation of our training data
+poly_features = PolynomialFeatures(degree=3)
+x_poly = poly_features.fit_transform(x_data_subset)
+~~~
+{: .language-python}
+
+> ## We convert a non-linear problem into a linear one
+> By converting our input feature data into a polynomial representation we can now solve our non-linear problem using linear techniques. This is a common occurence in machine learning as linear problems are far easier computationally to solve. We can treat this as just another pre-processing step to manipulate our features into a ML-ready format.
+{: .callout}
+
+We are now ready to create and train our model using our polynomial feature data. 
+
+~~~
+# Define our estimator/model(s) and train our model
+poly_regress = LinearRegression()
+poly_regress.fit(x_poly,y_data_subset)
+~~~
+{: .language-python}
+
+We can now make predictions using our full dataset. As we did for our training data, we need to quickly transform our full dataset into a polynomial expression. Then we can evaluate the RMSE of our predictions.
+
+~~~
+# make predictions using all data, pre-process data too
+x_poly_all = poly_features.fit_transform(x_data)
+poly_data = poly_regress.predict(x_poly_all)
+
+poly_error = math.sqrt(mean_squared_error(y_data, poly_data))
+print("poly error=", poly_error)
+~~~
+{: .language-python}
+
+Finally, let's visualise our model fit on our training data and full dataset.
+
+~~~
+plt.scatter(x_data, y_data, label="all data")
+plt.scatter(x_data_subset, y_data_subset, label="subset data")
+
+plt.plot(x_data, poly_data, "r-", label="poly fit")
+plt.xlabel("mass g")
+plt.ylabel("depth mm")
+plt.legend()
+plt.show()
+~~~
+{: .language-python}
+
+
+![Comparison of the regressions of our dataset](../fig/penguin_regression_poly.png)
+
+> ## Exercise: Vary your polynomial degree to try and improve fitting
+> Adjust the `degree=2` input variable for the `PolynomialFeatures` function to change the degree of polynomial fit. Can you improve the RMSE of your model?
+> > ## Solution
+> > MAYBE A FIGURE OR TWO. POTENTIALLY SOME CODE TO LOOP OVER POLYNOMIALS.
+> {: .solution}
+{: .challenge}
+
+> ## Exercise: Now try using the SplineTransformer to create a spline model
+> The SplineTransformer is another pre-processing function that behaves in a similar way to the PolynomialFeatures function. Adjust your
+> previous code to use the SplineTransformer. Can you improve the RMSE of your model by varying the `knots` and `degree` functions? Is the spline model better than the polynomial model?
+> > ## Solution
+> > ~~~
+> > spline_features =  SplineTransformer(n_knots=3, degree=2)
+> > ~~~
+> > {: .language-python}
+> >
+> > The above line replaces the `PolynomialFeatures` function. It takes in an additional argument `knots` compared to `PolynomialFeatures`.
+> > ADD LINES OR FIGURES TO EXPLORE THIS.
+> > SOME COMMENT ON FITS AND MODEL COMPARISON.
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
