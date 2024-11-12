@@ -62,7 +62,7 @@ To activate the environment, run the following OS-specific commands in Terminal 
 Install the prerequisites:
 
 ~~~
-pip install numpy pandas matplotlib opencv-python
+pip install numpy pandas matplotlib opencv-python scikit-learn
 ~~~
 {: .language-bash}
 
