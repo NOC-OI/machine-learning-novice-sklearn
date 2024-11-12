@@ -69,4 +69,7 @@ pip install numpy pandas matplotlib opencv-python scikit-learn
 ## Deactivating/activating environment
 To deactivate your virtual environment, simply run `deactivate` in your terminal or prompt. If you close the terminal, Git Bash, or Conda Prompt without deactivating, the environment will automatically close as the session ends. Later, you can reactivate the environment using the "Activate environment" instructions above to continue working. If you want to keep coding in the same terminal but no longer need this environment, it’s best to explicitly deactivate it. This ensures that the software installed for this workshop doesn’t interfere with your default Python setup or other projects.
 
+## Fallback option: cloud environment
+If a local installation does not work for you, it is also possible to run this lesson in [Google colab](https://colab.research.google.com/). If you open a jupyter notebook there, the required packages are already pre-installed.
+
 {% include links.md %}
