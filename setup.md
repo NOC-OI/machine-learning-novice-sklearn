@@ -25,26 +25,34 @@ cd workshop-ml
 We'll install the prerequisites in a virtual environment, to prevent them from cluttering up your Python environment and causing conflicts.
 First, create a new directory and ent
 
-To create a new virtual environment for the project, open the terminal and type:
+To create a new virtual environment ("venv") called "intro_ml" for the project, open the terminal (Max/Linux), Git Bash (Windows) or Anacomda Prompt (Windows), and type one of the below OS-specific options:
 
 ~~~
-python3 -m venv venv
+python3 -m venv intro_ml # mac/linux
+python -m venv intro_ml # windows
 ~~~
 {: .language-bash}
 
-> If you're on Linux and this doesn't work, try installing `python3-venv` using your package manager, e.g. `sudo apt-get install python3-venv`.
+> If you're on Linux and this doesn't work, you may need to install venv first. Try running `sudo apt-get install python3-venv` first, then `python3 -m venv intro_ml`
 {: .info}
+
+## Activate environment
+To activate the environment, run the following OS-specific commands in Terminal (Mac/Linux) or Git Bash (Windows) or Anaconda Prompt (Windows):
+
+* Windows + Git Bash: `source intro_ml/Scripts/activate`
+* Windows + Anaconda Prompt: `intro_ml/Scripts/activate`
+* Mac/Linux: `source intro_ml/bin/activate`
 
 ## Installing your prerequisites
 
-Activate your virtual environment, and install the prerequisites:
+Install the prerequisites:
 
 ~~~
-source venv/bin/activate
 pip install numpy pandas matplotlib opencv-python
 ~~~
 {: .language-bash}
 
-You'll need to re-activate the virtual environment to use it during the session.
+## Deactivating/activating environment
+To deactivate your virtual environment, simply run `deactivate` in your terminal or prompt. If you close the terminal, Git Bash, or Conda Prompt without deactivating, the environment will automatically close as the session ends. Later, you can reactivate the environment using the "Activate environment" instructions above to continue working. If you want to keep coding in the same terminal but no longer need this environment, it’s best to explicitly deactivate it. This ensures that the software installed for this workshop doesn’t interfere with your default Python setup or other projects.
 
 {% include links.md %}
