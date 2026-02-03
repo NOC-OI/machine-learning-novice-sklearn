@@ -63,7 +63,7 @@ import sklearn.cluster as skl_cluster
 ~~~
 {: .language-python}
 
-For this example, we're going to use Scikit-Learn's built-in 'random data blob generator' instead of using an external dataset. Therefore we'll need the `sklearn.datasets.samples_generator` module.
+For this example, we're going to use Scikit-Learn's built-in 'random data blob generator' instead of using an external dataset. Therefore we'll need the `sklearn.datasets` module.
 
 ~~~
 import sklearn.datasets as skl_datasets
