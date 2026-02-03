@@ -16,25 +16,7 @@ keypoints:
 
 Classification is a supervised method to recognise and group data objects into a pre-determined categories. Where regression uses labelled observations to predict a continuous numerical value, classification predicts a discrete categorical fit to a class. Classification in ML leverages a wide range of algorithms to classify a set of data/datasets into their respective categories.
 
-In this episode we are going to introduce the concept of supervised classification by classifying penguin data into different species of penguins using Scikit-Learn.
-
-## The penguins dataset
-We're going to be using the penguins dataset of Allison Horst, published [here](https://github.com/allisonhorst/palmerpenguins), The dataset contains 344 size measurements for three penguin species (Chinstrap, Gentoo and Adélie) observed on three islands in the Palmer Archipelago, Antarctica.
-
-![*Artwork by @allison_horst*](../fig/palmer_penguins.png)
-
-The physical attributes measured are flipper length, beak length, beak width, body mass, and sex.
-![*Artwork by @allison_horst*](../fig/culmen_depth.png)
-
-In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
-
-~~~
-import seaborn as sns
-
-dataset = sns.load_dataset('penguins')
-dataset.head()
-~~~
-{: .language-python}
+We'll be using the same penguins dataset that we used in the last section. Remember that this contained the data on three species of penguin (Chinstrap, Gentoo and Adélie). The dataset contained the variables flipper length, beak length, beak width, body mass, and sex for the three species.
 
 Our aim is to develop a classification model that will predict the species of a penguin based upon measurements of those variables.
 
@@ -46,9 +28,13 @@ The above table contains multiple categorical objects such as species. If we att
 
 ### Preprocessing our data
 
-Lets do some pre-processing on our dataset and specify our `X` features and `y` labels:
+Lets load up and pre-process our dataset and specify our `X` features and `y` labels:
 
 ~~~
+import seaborn as sns
+
+dataset = sns.load_dataset("penguins")
+
 # Extract the data we need
 feature_names = ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']
 dataset.dropna(subset=feature_names, inplace=True)
@@ -63,9 +49,9 @@ y = dataset['species']
 Having extracted our features `X` and labels `y`, we can now split the data using the `train_test_split` function.
 
 ## Training-testing split
-When undertaking any machine learning project, it's important to be able to evaluate how well your model works. 
+When undertaking any machine learning project, it's important to be able to evaluate how well your model works.
 
-Rather than evaluating this manually we can instead set aside some of our training data, usually 20% of our training data, and use these as a testing dataset. We then train on the remaining 80% and use the testing dataset to evaluate the accuracy of our trained model. 
+Rather than evaluating this manually we can instead set aside some of our training data, usually 20% of our training data, and use these as a testing dataset. We then train on the remaining 80% and use the testing dataset to evaluate the accuracy of our trained model.
 
 We lose a bit of training data in the process, But we can now easily evaluate the performance of our model. With more advanced test-train split techniques we can even recover this lost training data!
 
@@ -73,7 +59,7 @@ We lose a bit of training data in the process, But we can now easily evaluate th
 > It's important to do this early, and to do all of your work with the training dataset - this avoids any risk of you introducing bias to the model based on your own manual observations of data in the testing set (afterall, we want the model to make the decisions about parameters!). This can also highlight when you are over-fitting on your training data.
 {: .callout}
 
-How we split the data into training and testing sets is also extremely important. We need to make sure that our training data is representitive of both our test data and actual data. 
+How we split the data into training and testing sets is also extremely important. We need to make sure that our training data is representitive of both our test data and actual data.
 
 For classification problems this means we should ensure that each class of interest is represented proportionately in both training and testing sets. For regression problems we should ensure that our training and test sets cover the range of feature values that we wish to predict.
 
@@ -162,7 +148,7 @@ plt.show()
 
 ![Decision tree for classifying penguins](../fig/e3_dt_2.png)
 
-The first first question (`depth=1`) splits the training data into "Adelie" and "Gentoo" categories using the criteria `flipper_length_mm <= 206.5`, and the next two questions (`depth=2`) split the "Adelie" and "Gentoo" categories into "Adelie & Chinstrap" and "Gentoo & Chinstrap" predictions. 
+The first first question (`depth=1`) splits the training data into "Adelie" and "Gentoo" categories using the criteria `flipper_length_mm <= 206.5`, and the next two questions (`depth=2`) split the "Adelie" and "Gentoo" categories into "Adelie & Chinstrap" and "Gentoo & Chinstrap" predictions.
 
 
 
@@ -264,12 +250,12 @@ This is a classic case of over-fitting - our model has produced extremely specif
 ## Classification using support vector machines
 Next, we'll look at another commonly used classification algorithm, and see how it compares. Support Vector Machines (SVM) work in a way that is conceptually similar to your own intuition when first looking at the data. They devise a set of hyperplanes that delineate the parameter space, such that each region contains ideally only observations from one class, and the boundaries fall between classes. One of the core strengths of Support Vector Machines (SVMs) is their ability to handle non-linear relationships between features by transforming the data into a higher-dimensional space. This transformation allows SVMs to find a linear boundary/hyperplane in this new space, which corresponds to a non-linear boundary in the original space.
 
-**What are the "trainable parameters" in an SVM?** 
+**What are the "trainable parameters" in an SVM?**
 For a linear SVM, the trainable parameters are:
 
 - Weight vector: A vector that defines the orientation of the hyperplane. Its size is equal to the number of features in X.
 - Bias: A scalar value that shifts the hyperplane to maximize the margin.
-  
+
 ### When to Choose SVM Over Decision Tree
 
 1. **High-Dimensional Data**:
@@ -281,14 +267,14 @@ For a linear SVM, the trainable parameters are:
    - **Why Not Decision Tree**: Decision trees are typically interpretable, making them better if you need to explain your model.
 
 ### Standardizing data
-Unlike decision trees, SVMs require an additional pre-processing step for our data. We need to standardize or "z-score" it. Our raw data has parameters with different magnitudes such as bill length measured in 10's of mm's, whereas body mass is measured in 1000's of grams. If we trained an SVM directly on this data, it would only consider the parameter with the greatest variance (body mass). 
+Unlike decision trees, SVMs require an additional pre-processing step for our data. We need to standardize or "z-score" it. Our raw data has parameters with different magnitudes such as bill length measured in 10's of mm's, whereas body mass is measured in 1000's of grams. If we trained an SVM directly on this data, it would only consider the parameter with the greatest variance (body mass).
 
 Standarizing maps each parameter to a new range so that it has a mean of 0 and a standard deviation of 1. This places all features on the same playing field, and allows SVM to reveal the most accurate decision boundaries.
 
 #### When to Standardize Your Data: A Broader Overview
 
 Standardization is an essential preprocessing step for many machine learning models, particularly those that rely on **distance-based calculations** to make predictions or extract features. These models are sensitive to the scale of the input features because their mathematical foundations involve distances, magnitudes, or directions in the feature space. Without standardization, features with larger ranges can dominate the calculations, leading to suboptimal results. However, not all models require standardization; some, like decision trees, operate on thresholds and are unaffected by feature scaling. Here's a breakdown of when to standardize, explicitly explaining the role of distance-based calculations in each case.
-  
+
 ##### When to Standardize: Models That Use Distance-Based Calculations
 
 1. **Support Vector Machines (SVMs)**: SVMs calculate the distance of data points to a hyperplane and aim to maximize the margin (the distance between the hyperplane and the nearest points, called support vectors).

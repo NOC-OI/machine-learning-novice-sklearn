@@ -41,7 +41,30 @@ Regression can be as simple as drawing a "line of best fit" through data points,
 
 ## Linear regression using Scikit-Learn
 
-We've had a lot of theory so time to start some actual coding! Let's create a regression model on some penguin data available through the Python plotting library [Seaborn](https://seaborn.pydata.org/). 
+We've had a lot of theory so time to start some actual coding!
+
+### The penguins dataset
+
+We're going to be using the penguins dataset of Allison Horst, published [here](https://github.com/allisonhorst/palmerpenguins), The dataset contains 344 size measurements for three penguin species (Chinstrap, Gentoo and Adélie) observed on three islands in the Palmer Archipelago, Antarctica.
+
+![*Artwork by @allison_horst*](../fig/palmer_penguins.png)
+
+The physical attributes measured are flipper length, beak length, beak width, body mass, and sex.
+![*Artwork by @allison_horst*](../fig/culmen_depth.png)
+
+In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
+
+The penguin dataset is available through the Python plotting library [Seaborn](https://seaborn.pydata.org/).
+
+~~~
+import seaborn as sns
+
+dataset = sns.load_dataset('penguins')
+dataset.head()
+~~~
+{: .language-python}
+
+
 
 Let’s start by loading in and examining the penguin dataset, which containing a few hundred samples and a number of features and labels.
 
@@ -62,7 +85,7 @@ dataset.head()
 {: .language-python}
 
 
-In this scenario we will train a linear regression model using `body_mass_g` as our feature data and `bill_depth_mm` as our label data. We will train our model on a subset of the data by slicing the first 146 samples of our cleaned data. 
+In this scenario we will train a linear regression model using `body_mass_g` as our feature data and `bill_depth_mm` as our label data. We will train our model on a subset of the data by slicing the first 146 samples of our cleaned data.
 
 In machine learning we often train our models on a subset of data, for reasons we will explain later in this lesson, so let us extract a subset of data to work on by slicing the first 146 samples of our cleaned data and extracting our feature and label data:
 
@@ -206,15 +229,15 @@ Oh dear. It looks like our linear regression fits okay for our subset of the pen
 > Over fitting is the ML equivalent of learning an exam papers mark scheme off by heart, rather than understanding and answering the questions.
 {: .callout}
 
-In this episode we chose to create a regression model for `bill_depth_mm` versus `body_mass_g` predictions without understanding our penguin dataset. While we proved we *can* make a model by doing this we also saw that the model is flawed due to complexity in the data that we did not account for. 
+In this episode we chose to create a regression model for `bill_depth_mm` versus `body_mass_g` predictions without understanding our penguin dataset. While we proved we *can* make a model by doing this we also saw that the model is flawed due to complexity in the data that we did not account for.
 
-With enough data and by using more complex regression models we *may* be able to create a generalisable `bill_depth_mm` versus `body_mass_g` model for penguins, but it's important to be aware that some problems simply might not be solvable with the data quantity or features that you have. 
+With enough data and by using more complex regression models we *may* be able to create a generalisable `bill_depth_mm` versus `body_mass_g` model for penguins, but it's important to be aware that some problems simply might not be solvable with the data quantity or features that you have.
 
-In the next episode we will take a deeper dive into the penguin dataset as we attempt to create classification models for penguin species. 
+In the next episode we will take a deeper dive into the penguin dataset as we attempt to create classification models for penguin species.
 
 ## Repeating the regression with different estimators
 
-The goal of this lesson isn't to build a generalisable `bill_depth_mm` versus `body_mass_g` model for the penguin dataset - the goal is to give you some hands-on experience building machine learning models with scikit-learn. So let's repeat the above but this time using a polynomial function. 
+The goal of this lesson isn't to build a generalisable `bill_depth_mm` versus `body_mass_g` model for the penguin dataset - the goal is to give you some hands-on experience building machine learning models with scikit-learn. So let's repeat the above but this time using a polynomial function.
 
 Polynomial functions are non-linear functions that are commonly-used to model data. Mathematically they have `N` degrees of freedom and they take the following form `y = a + bx + cx^2 + dx^3 ... + mx^N`. If we have a polynomial of degree `N=1` we once again return to a linear equation `y = a + bx` or as it is more commonly written `y = mx + c`.
 
@@ -230,7 +253,7 @@ We've decided to use a Polynomial estimator, so now let's tweak our dataset into
 ~~~
 from sklearn.preprocessing import PolynomialFeatures
 
-# Requires sorted data for ordered polynomial lines 
+# Requires sorted data for ordered polynomial lines
 dataset = dataset.sort_values("body_mass_g")
 x_data = dataset["body_mass_g"]
 y_data = dataset["bill_depth_mm"]
@@ -251,7 +274,7 @@ x_poly = poly_features.fit_transform(x_data_subset)
 > By converting our input feature data into a polynomial representation we can now solve our non-linear problem using linear techniques. This is a common occurence in machine learning as linear problems are far easier computationally to solve. We can treat this as just another pre-processing step to manipulate our features into a ML-ready format.
 {: .callout}
 
-We are now ready to create and train our model using our polynomial feature data. 
+We are now ready to create and train our model using our polynomial feature data.
 
 ~~~
 # Define our estimator/model(s) and train our model
