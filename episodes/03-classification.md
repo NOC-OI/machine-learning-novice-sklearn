@@ -16,25 +16,7 @@ keypoints:
 
 Classification is a supervised method to recognise and group data objects into a pre-determined categories. Where regression uses labelled observations to predict a continuous numerical value, classification predicts a discrete categorical fit to a class. Classification in ML leverages a wide range of algorithms to classify a set of data/datasets into their respective categories.
 
-In this episode we are going to introduce the concept of supervised classification by classifying penguin data into different species of penguins using Scikit-Learn.
-
-## The penguins dataset
-We're going to be using the penguins dataset of Allison Horst, published [here](https://github.com/allisonhorst/palmerpenguins), The dataset contains 344 size measurements for three penguin species (Chinstrap, Gentoo and Adélie) observed on three islands in the Palmer Archipelago, Antarctica.
-
-![*Artwork by @allison_horst*](../fig/palmer_penguins.png)
-
-The physical attributes measured are flipper length, beak length, beak width, body mass, and sex.
-![*Artwork by @allison_horst*](../fig/culmen_depth.png)
-
-In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
-
-~~~
-import seaborn as sns
-
-dataset = sns.load_dataset('penguins')
-dataset.head()
-~~~
-{: .language-python}
+We'll be using the same penguins dataset that we used in the last section. Remember that this contained the data on three species of penguin (Chinstrap, Gentoo and Adélie). The dataset contained the variables flipper length, beak length, beak width, body mass, and sex for the three species.
 
 Our aim is to develop a classification model that will predict the species of a penguin based upon measurements of those variables.
 
@@ -46,9 +28,13 @@ The above table contains multiple categorical objects such as species. If we att
 
 ### Preprocessing our data
 
-Lets do some pre-processing on our dataset and specify our `X` features and `y` labels:
+Lets load up and pre-process our dataset and specify our `X` features and `y` labels:
 
 ~~~
+import seaborn as sns
+
+dataset = sns.load_dataset("penguins")
+
 # Extract the data we need
 feature_names = ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']
 dataset.dropna(subset=feature_names, inplace=True)
@@ -63,9 +49,9 @@ y = dataset['species']
 Having extracted our features `X` and labels `y`, we can now split the data using the `train_test_split` function.
 
 ## Training-testing split
-When undertaking any machine learning project, it's important to be able to evaluate how well your model works. 
+When undertaking any machine learning project, it's important to be able to evaluate how well your model works.
 
-Rather than evaluating this manually we can instead set aside some of our training data, usually 20% of our training data, and use these as a testing dataset. We then train on the remaining 80% and use the testing dataset to evaluate the accuracy of our trained model. 
+Rather than evaluating this manually we can instead set aside some of our training data, usually 20% of our training data, and use these as a testing dataset. We then train on the remaining 80% and use the testing dataset to evaluate the accuracy of our trained model.
 
 We lose a bit of training data in the process, But we can now easily evaluate the performance of our model. With more advanced test-train split techniques we can even recover this lost training data!
 
@@ -73,7 +59,7 @@ We lose a bit of training data in the process, But we can now easily evaluate th
 > It's important to do this early, and to do all of your work with the training dataset - this avoids any risk of you introducing bias to the model based on your own manual observations of data in the testing set (afterall, we want the model to make the decisions about parameters!). This can also highlight when you are over-fitting on your training data.
 {: .callout}
 
-How we split the data into training and testing sets is also extremely important. We need to make sure that our training data is representitive of both our test data and actual data. 
+How we split the data into training and testing sets is also extremely important. We need to make sure that our training data is representitive of both our test data and actual data.
 
 For classification problems this means we should ensure that each class of interest is represented proportionately in both training and testing sets. For regression problems we should ensure that our training and test sets cover the range of feature values that we wish to predict.
 
@@ -127,10 +113,12 @@ We'll first apply a decision tree classifier to the data. Decisions trees are co
 
 
 Training and using a decision tree in Scikit-Learn is straightforward:
+
+**Note**: Decision trees sometimes use randomness when selecting features to split on, especially when working with data where splits could have equal information gain or in ensemble methods (like Random Forests) where random feature subsets are selected. Setting random_state ensures that this randomness is reproducible.
 ~~~
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
-clf = DecisionTreeClassifier(max_depth=2)
+clf = DecisionTreeClassifier(max_depth=2, random_state=0)
 clf.fit(X_train, y_train)
 
 clf.predict(X_test)
@@ -160,7 +148,7 @@ plt.show()
 
 ![Decision tree for classifying penguins](../fig/e3_dt_2.png)
 
-The first first question (`depth=1`) splits the training data into "Adelie" and "Gentoo" categories using the criteria `flipper_length_mm <= 206.5`, and the next two questions (`depth=2`) split the "Adelie" and "Gentoo" categories into "Adelie & Chinstrap" and "Gentoo & Chinstrap" predictions. 
+The first first question (`depth=1`) splits the training data into "Adelie" and "Gentoo" categories using the criteria `flipper_length_mm <= 206.5`, and the next two questions (`depth=2`) split the "Adelie" and "Gentoo" categories into "Adelie & Chinstrap" and "Gentoo & Chinstrap" predictions.
 
 
 
@@ -179,7 +167,7 @@ from sklearn.inspection import DecisionBoundaryDisplay
 f1 = feature_names[0]
 f2 = feature_names[3]
 
-clf = DecisionTreeClassifier(max_depth=2)
+clf = DecisionTreeClassifier(max_depth=2, random_state=0)
 clf.fit(X_train[[f1, f2]], y_train)
 
 d = DecisionBoundaryDisplay.from_estimator(clf, X_train[[f1, f2]])
@@ -204,7 +192,7 @@ max_depths = [1, 2, 3, 4, 5]
 
 accuracy = []
 for i, d in enumerate(max_depths):
-    clf = DecisionTreeClassifier(max_depth=d)
+    clf = DecisionTreeClassifier(max_depth=d, random_state=0)
     clf.fit(X_train, y_train)
     acc = clf.score(X_test, y_test)
 
@@ -212,12 +200,13 @@ for i, d in enumerate(max_depths):
 
 acc_df = pd.DataFrame(accuracy, columns=['depth', 'accuracy'])
 
-sns.lineplot(acc_df, x='depth', y='accuracy')
+sns.lineplot(acc_df, x='depth', y='accuracy', marker='o')
 plt.xlabel('Tree depth')
 plt.ylabel('Accuracy')
 plt.show()
 ~~~
 {: .language-python}
+
 
 ![Performance of decision trees of various depths](../fig/e3_dt_overfit.png)
 
@@ -226,7 +215,7 @@ Here we can see that a `max_depth=2` performs slightly better on the test data t
 Let's reuse our fitting and plotting codes from above to inspect a decision tree that has `max_depth=5`:
 
 ~~~
-clf = DecisionTreeClassifier(max_depth=5)
+clf = DecisionTreeClassifier(max_depth=5, random_state=0)
 clf.fit(X_train, y_train)
 
 fig = plt.figure(figsize=(12, 10))
@@ -242,7 +231,7 @@ It looks like our decision tree has split up the training data into the correct 
 f1 = feature_names[0]
 f2 = feature_names[3]
 
-clf = DecisionTreeClassifier(max_depth=5)
+clf = DecisionTreeClassifier(max_depth=5, random_state=0)
 clf.fit(X_train[[f1, f2]], y_train)
 
 d = DecisionBoundaryDisplay.from_estimator(clf, X_train[[f1, f2]])
@@ -258,7 +247,7 @@ Earlier we saw that the `max_depth=2` model split the data into 3 simple boundin
 
 This is a classic case of over-fitting - our model has produced extremely specific parameters that work for the training data but are not representitive of our test data. Sometimes simplicity is better!
 
-> ### Exercise: Bias-Variance tradeoff
+> ### Exercise: Bias-Variance tradeoff (optional)
 > Typically, as we initially transition from simple to more complex models (e.g., depth of 1 -> 2), we'll see an increase in model performance (test set accuracy). However, beyond a certain point of complexity, the model will be more prone to overfitting effects. This is known as the "U-shaped" Bias-Variance tradeoff, where "bias" represents prediction error from models being too simple, and "variance" represents prediciton errors from models' being too complex. This is because more complicated models begin to memorize the noise in the training data rather than capture underlying patterns in the data. What happens as we continue to add depth to our tree?
 > 
 > ~~~
@@ -349,12 +338,56 @@ This is a classic case of over-fitting - our model has produced extremely specif
 
 
 ## Classification using support vector machines
-Next, we'll look at another commonly used classification algorithm, and see how it compares. Support Vector Machines (SVM) work in a way that is conceptually similar to your own intuition when first looking at the data. They devise a set of hyperplanes that delineate the parameter space, such that each region contains ideally only observations from one class, and the boundaries fall between classes.
+Next, we'll look at another commonly used classification algorithm, and see how it compares. Support Vector Machines (SVM) work in a way that is conceptually similar to your own intuition when first looking at the data. They devise a set of hyperplanes that delineate the parameter space, such that each region contains ideally only observations from one class, and the boundaries fall between classes. One of the core strengths of Support Vector Machines (SVMs) is their ability to handle non-linear relationships between features by transforming the data into a higher-dimensional space. This transformation allows SVMs to find a linear boundary/hyperplane in this new space, which corresponds to a non-linear boundary in the original space.
 
-### Normalising data
-Unlike decision trees, SVMs require an additional pre-processing step for our data. We need to normalise it. Our raw data has parameters with different magnitudes such as bill length measured in 10's of mm's, whereas body mass is measured in 1000's of grams. If we trained an SVM directly on this data, it would only consider the parameter with the greatest variance (body mass).
+**What are the "trainable parameters" in an SVM?**
+For a linear SVM, the trainable parameters are:
 
-Normalising maps each parameter to a new range so that it has a mean of 0 and a standard deviation of 1.
+- Weight vector: A vector that defines the orientation of the hyperplane. Its size is equal to the number of features in X.
+- Bias: A scalar value that shifts the hyperplane to maximize the margin.
+
+### When to Choose SVM Over Decision Tree
+
+1. **High-Dimensional Data**:
+   - **Why SVM**: SVMs excel in high-dimensional spaces because the kernel trick allows them to separate classes even in complex feature spaces without explicitly mapping the data.
+   - **Why Not Decision Tree**: Decision trees struggle with high-dimensional data as the number of potential splits grows exponentially, leading to overfitting or underperformance.
+
+2. **Accuracy over Interpretbaility**:
+   - **Why SVM**: SVMs are often considered black-box models, focusing on accuracy rather than interpretability.
+   - **Why Not Decision Tree**: Decision trees are typically interpretable, making them better if you need to explain your model.
+
+### Standardizing data
+Unlike decision trees, SVMs require an additional pre-processing step for our data. We need to standardize or "z-score" it. Our raw data has parameters with different magnitudes such as bill length measured in 10's of mm's, whereas body mass is measured in 1000's of grams. If we trained an SVM directly on this data, it would only consider the parameter with the greatest variance (body mass).
+
+Standarizing maps each parameter to a new range so that it has a mean of 0 and a standard deviation of 1. This places all features on the same playing field, and allows SVM to reveal the most accurate decision boundaries.
+
+#### When to Standardize Your Data: A Broader Overview
+
+Standardization is an essential preprocessing step for many machine learning models, particularly those that rely on **distance-based calculations** to make predictions or extract features. These models are sensitive to the scale of the input features because their mathematical foundations involve distances, magnitudes, or directions in the feature space. Without standardization, features with larger ranges can dominate the calculations, leading to suboptimal results. However, not all models require standardization; some, like decision trees, operate on thresholds and are unaffected by feature scaling. Here's a breakdown of when to standardize, explicitly explaining the role of distance-based calculations in each case.
+
+##### When to Standardize: Models That Use Distance-Based Calculations
+
+1. **Support Vector Machines (SVMs)**: SVMs calculate the distance of data points to a hyperplane and aim to maximize the margin (the distance between the hyperplane and the nearest points, called support vectors).
+
+2. **k-Nearest Neighbors (k-NN)**: k-NN determines class or value predictions based on the distance between a query point and its k-nearest neighbors in the feature space.
+
+3. **Logistic Regression with Regularization**: Regularization terms (e.g., L1 or L2 penalties) involve calculating the magnitude (distance) of the parameter vector to reduce overfitting and encourage simplicity.
+
+4. **Principal Component Analysis (PCA)**: PCA identifies principal components by calculating the Euclidean distance from data points to the axes representing the highest variance directions in the feature space.
+
+5. **Neural Networks (NNs)**: Neural networks rely on gradient-based optimization to learn weights. If input features have vastly different scales, gradients can become unstable, slowing down training or causing convergence issues. Standardizing or normalizing (scaling from 0 to 1) features ensures that all inputs contribute equally to the optimization process.
+
+6. **Linear Regression (for Interpreting Many Coefficients)**: While linear regression itself doesn’t rely on distance-based calculations, standardization is crucial when interpreting coefficients because it ensures that all features are on the same scale, making their relative importance directly comparable. Without standardization, coefficients in linear regression reflect the relationship between the dependent variable and a feature in the units of that feature, making it difficult to compare features with different scales (e.g., height in centimeters vs. weight in kilograms).
+
+##### When to Skip Standardization: Models That Don’t Use Distance-Based Calculations
+
+1. **Decision Trees**: Decision trees split data based on thresholds, independent of feature scales, without relying on any distance-based calculations.
+
+2. **Random Forests**: Random forests aggregate decisions from multiple trees, which also use thresholds rather than distance-based metrics.
+
+3. **Gradient Boosted Trees**: Gradient boosting optimizes decision trees sequentially, focusing on residuals and splits rather than distance measures.
+
+By understanding whether a model relies on distance-based calculations (or benefits from standardized features for interpretability), you can decide whether standardization is necessary, ensuring that your preprocessing pipeline is well-suited to the algorithm you’re using.
 
 ~~~
 from sklearn import preprocessing

@@ -3,7 +3,7 @@ layout: lesson
 root: .  # Is the only page that doesn't follow the pattern /:path/index.html
 permalink: index.html  # Is the only page that doesn't follow the pattern /:path/index.html
 ---
-An introduction to machine learning.
+This workshop provides a beginner-friendly overview of machine learning (ML) and common ML methods— including regression, classification, clustering, dimensionality reduction, ensemble methods, and a quick neural-network demo—using Python + scikit-learn. The broad coverage is designed to jump-start your ML journey and point you toward next learning steps.
 
 <!-- this is an html comment -->
 
