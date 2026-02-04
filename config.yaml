@@ -20,10 +20,10 @@ carpentry: 'incubator'
 title: 'Introduction to Machine Learning with Scikit Learn'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: 
+created: 2019-04-04
 
 # Comma-separated list of keywords for the lesson
-keywords: 'software, data, lesson, The Carpentries'
+keywords: 'software, data, lesson, The Carpentries, machine learning, sklearn, scikit learn, neural networks, random forests, regression, classification, decision trees, ensemble methods, supervised learning, unsupervised learning, principal component analysis, PCA, t-distributed Stochastic Neighbor Embedding, t-SNE, ethics'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
@@ -74,7 +74,6 @@ episodes:
 - 07-neural-networks.md
 - 08-ethics.md
 - 09-learn-more.md
-- ensemble_classification.md
 
 # Information for Learners
 learners: 
