@@ -329,17 +329,17 @@ We have now trained a neural network and tested prediction on a few images. This
 ~~~
 correct=0
 
-for idx, row in enumerate(data_test):
+for idx, row in enumerate(X_test):
     # image contains a tuple of the row number and image data
     image = row.reshape(1,784)
 
     prediction = mlp.predict(image)[0]
-    actual = labels_test[idx]
+    actual = Y_test[idx]
 
     if prediction == actual:
         correct = correct + 1
 
-print((correct/len(data_test))*100)
+print((correct/len(X_test))*100)
 ~~~
 {: .language-python}
 
@@ -476,10 +476,13 @@ Google, Microsoft, Amazon, and many other companys now have cloud based Applicat
 
 > ## Exercise: Try cloud image classification
 > Take a photo with your phone camera or find an image online of a common daily scene.
-> Upload it to Google's Vision AI at https://cloud.google.com/vision/
+> Upload it to [https://cloud.google.com/vision/](Google's Cloud Vision API)
+> (scroll down to the "demo" section about 1/3rd of the way down the page).
 > How many objects has it correctly classified? How many did it incorrectly classify?
-> Try the same image with Microsoft's Computer Vision API at https://azure.microsoft.com/en-gb/services/cognitive-services/computer-vision/
-> Does it do any better/worse than Google?
+> Another example is this instance of the YOLOv12 image recognition neural network
+> hosted by [https://huggingface.co/spaces/sunsmarterjieleaf/yolov12](HuggingFace).
+> Try the same image here, how do the results compare to Google? 
+
 {: .challenge}
 
 {% include links.md %}
