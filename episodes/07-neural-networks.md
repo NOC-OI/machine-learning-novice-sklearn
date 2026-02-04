@@ -272,7 +272,7 @@ Try tweaking this parameter by adding the parameter `learning_rate_init` with a 
 
 ## Using your own handwriting
 
-Create an image using Microsoft Paint, the GNU Image Manipulation Project (GIMP) or [jspaint](https://jspaint.app/). The image needs to be grayscale and 28 x 28 pixels.
+Create an image using Microsoft Paint, the GNU Image Manipulation Project (GIMP) or [jspaint](https://jspaint.app/). The image needs to be grayscale, 28 x 28 pixels and the background should be black and the text white.
 
 Try to draw a digit (0-9) in the image and save it into your code directory.
 
@@ -295,7 +295,8 @@ import matplotlib.pyplot as plt
 digit = cv2.imread("digit.png")
 digit_gray = cv2.cvtColor(digit, cv2.COLOR_BGR2GRAY)
 digit_norm = digit_gray/255.0
-cv2.imshow("Normalised Digit",digit_norm)
+plt.imshow("Normalised Digit",digit_norm)
+plt.show()
 print("Your digit is",mlp.predict(digit_norm.reshape(1,784)))
 ```
 
