@@ -37,6 +37,12 @@
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/aio.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/images.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/index.html</loc>
   </url>
   <url>
@@ -76,13 +82,31 @@
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/aio.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/images.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/index.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/profiles.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/machine-learning-novice-sklearn/profiles.html</loc>
