@@ -7,8 +7,6 @@ This workshop provides a beginner-friendly overview of machine learning (ML) and
 
 <!-- this is an html comment -->
 
-{% comment %} This is a comment in Liquid {% endcomment %}
-
 ::::::::::::::::::::::::::::::::::::::::::  prereq
 
 ## Prerequisites
