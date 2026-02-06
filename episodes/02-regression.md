@@ -309,13 +309,52 @@ plt.show()
 
 ### Exercise: Vary your polynomial degree to try and improve fitting
 
-Adjust the `degree=2` input variable for the `PolynomialFeatures` function to change the degree of polynomial fit. Can you improve the RMSE of your model?
+Adjust the `degree=3` input variable for the `PolynomialFeatures` function to change the degree of polynomial fit. Can you improve the RMSE of your model?
 
 :::::::::::::::  solution
 
 ### Solution
 
-MAYBE A FIGURE OR TWO. POTENTIALLY SOME CODE TO LOOP OVER POLYNOMIALS.
+Let's plot all the fitted polynomials of degree one to nine, alongside the data as before. We can also calculate the root mean squared error of each polynomial fit and print the best.
+
+```python
+#plot the data
+plt.scatter(x_data, y_data, label="all data")
+plt.scatter(x_data_subset, y_data_subset, label="subset data")
+
+#name a variable 'best' to store the best RMSE we find.
+best = np.inf
+
+#loop through and plotpolynomials of degree one to nine, 
+#reusing the earlier code.
+for degree in range(1,10):
+    poly_features = PolynomialFeatures(degree=degree)
+    x_poly = poly_features.fit_transform(x_data_subset)
+    # Define our estimator/model(s) and train our model
+    poly_regress = LinearRegression()
+    poly_regress.fit(x_poly,y_data_subset)
+    # make predictions using all data, pre-process data too
+    x_poly_all = poly_features.fit_transform(x_data)
+    poly_data = poly_regress.predict(x_poly_all)
+    
+    poly_error = math.sqrt(mean_squared_error(y_data, poly_data))
+    print("degree=",degree,"; poly error=", poly_error)
+
+    #find best degree polynomial
+    if poly_error < best:
+        best = poly_error
+        #create a variable called degree to store the best polynomial degree.
+        best_degree = degree
+    plt.plot(x_data, poly_data, "-", label="poly fit, degree="+str(degree))
+
+#print our best degree polynomial
+print("Best degree was",best_degree,"with poly error=",best)
+plt.xlabel("mass g")
+plt.ylabel("depth mm")
+plt.legend(ncol=4)
+plt.show()
+```
+![](fig/polynomial_comparison.png){alt='Comparison of several polynomial fits to the data.'}
 
 
 
