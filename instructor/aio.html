@@ -1128,7 +1128,7 @@ polynomial fit. Can you improve the RMSE of your model?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Let’s plot all the fitted polynomials of degree one to nine,
 alongside the data as before. We can also calculate the root mean
@@ -1199,7 +1199,7 @@ functions? Is the spline model better than the polynomial model?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2846,7 +2846,7 @@ might you use to select the best one?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The silouette score, unfortunately, incorrectly identifies N=2 as the
 most approprirate clustering configuration in this case (silhouette =
@@ -2905,7 +2905,7 @@ any strange behaviour?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Increasing n_samples to 4000 and cluster_std to 3.0 looks like this:
 <img src="../fig/kmeans_overlapping_clusters.png" alt="Kmeans attempting to classify overlapping clusters" class="figure"> The straight
@@ -3027,7 +3027,7 @@ real)?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>KMeans version: runtime around 4 seconds (your computer might be
 faster/slower)</p>
@@ -4411,7 +4411,7 @@ networks on powerful computers.</li>
 </div>
 </section></section><section id="aio-08-ethics"><p>Content from <a href="08-ethics.html">Ethics and the Implications of Machine Learning</a></p>
 <hr>
-<p>Last updated on 2026-02-04 |
+<p>Last updated on 2026-02-06 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/08-ethics.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 15 minutes</p>
@@ -4453,19 +4453,19 @@ around the ethics of using the technology to make predictions and
 decisions that will affect people in everyday life. For example:</p>
 <ul>
 <li>The first death from a driverless car which failed to brake for a
-pedestrian.<a href="https://www.forbes.com/sites/meriameberboucha/2018/05/28/uber-self-driving-car-crash-what-really-happened/" class="external-link"><span class="math display">\[1\]</span></a>
+pedestrian. <a href="https://www.forbes.com/sites/meriameberboucha/2018/05/28/uber-self-driving-car-crash-what-really-happened/" class="external-link">1</a>
 </li>
 <li>Highly targetted advertising based around social media and internet
-usage. <a href="https://www.wired.com/story/big-tech-can-use-ai-to-extract-many-more-ad-dollars-from-our-clicks/" class="external-link"><span class="math display">\[2\]</span></a>
+usage.<a href="https://www.wired.com/story/big-tech-can-use-ai-to-extract-many-more-ad-dollars-from-our-clicks/" class="external-link">2</a>
 </li>
 <li>The outcomes of elections and referenda being influenced by highly
 targetted social media posts. This is compounded by data being obtained
-without the user’s consent. <a href="https://www.vox.com/policy-and-politics/2018/3/23/17151916/facebook-cambridge-analytica-trump-diagram" class="external-link"><span class="math display">\[3\]</span></a>
+without the user’s consent.<a href="https://www.vox.com/policy-and-politics/2018/3/23/17151916/facebook-cambridge-analytica-trump-diagram" class="external-link">3</a>
 </li>
-<li>The widespread use of facial recognition technologies. <a href="https://www.bbc.co.uk/news/technology-44089161" class="external-link"><span class="math display">\[4\]</span></a>
+<li>The widespread use of facial recognition technologies.<a href="https://www.bbc.co.uk/news/technology-44089161" class="external-link">4</a>
 </li>
 <li>The potential for autonomous military robots to be deployed in
-combat. <a href="https://www.theverge.com/2021/6/3/22462840/killer-robot-autonomous-drone-attack-libya-un-report-context" class="external-link"><span class="math display">\[5\]</span></a>
+combat.<a href="https://www.theverge.com/2021/6/3/22462840/killer-robot-autonomous-drone-attack-libya-un-report-context" class="external-link">5</a>
 </li>
 </ul>
 <div class="section level3">
