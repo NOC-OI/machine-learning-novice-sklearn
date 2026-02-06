@@ -690,7 +690,7 @@ computers show human-like intelligence.</li>
 </div>
 </section></section><section id="aio-02-regression"><p>Content from <a href="02-regression.html">Supervised methods - Regression</a></p>
 <hr>
-<p>Last updated on 2026-02-04 |
+<p>Last updated on 2026-02-06 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/02-regression.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 120 minutes</p>
@@ -1117,7 +1117,7 @@ dataset.</p>
 <h3 class="callout-title">Exercise: Vary your polynomial degree to try
 and improve fitting</h3>
 <div class="callout-content">
-<p>Adjust the <code>degree=2</code> input variable for the
+<p>Adjust the <code>degree=3</code> input variable for the
 <code>PolynomialFeatures</code> function to change the degree of
 polynomial fit. Can you improve the RMSE of your model?</p>
 </div>
@@ -1130,8 +1130,49 @@ polynomial fit. Can you improve the RMSE of your model?</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<p>MAYBE A FIGURE OR TWO. POTENTIALLY SOME CODE TO LOOP OVER
-POLYNOMIALS.</p>
+<p>Let’s plot all the fitted polynomials of degree one to nine,
+alongside the data as before. We can also calculate the root mean
+squared error of each polynomial fit and print the best.</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">#plot the data</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>plt.scatter(x_data, y_data, label<span class="op">=</span><span class="st">"all data"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>plt.scatter(x_data_subset, y_data_subset, label<span class="op">=</span><span class="st">"subset data"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#name a variable 'best' to store the best RMSE we find.</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>best <span class="op">=</span> np.inf</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#loop through and plotpolynomials of degree one to nine, </span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#reusing the earlier code.</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="cf">for</span> degree <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>):</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>    poly_features <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span>degree)</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>    x_poly <span class="op">=</span> poly_features.fit_transform(x_data_subset)</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="co"># Define our estimator/model(s) and train our model</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>    poly_regress <span class="op">=</span> LinearRegression()</span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>    poly_regress.fit(x_poly,y_data_subset)</span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>    <span class="co"># make predictions using all data, pre-process data too</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>    x_poly_all <span class="op">=</span> poly_features.fit_transform(x_data)</span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>    poly_data <span class="op">=</span> poly_regress.predict(x_poly_all)</span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>    </span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a>    poly_error <span class="op">=</span> math.sqrt(mean_squared_error(y_data, poly_data))</span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"degree="</span>,degree,<span class="st">"; poly error="</span>, poly_error)</span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>    <span class="co">#find best degree polynomial</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a>    <span class="cf">if</span> poly_error <span class="op">&lt;</span> best:</span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a>        best <span class="op">=</span> poly_error</span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a>        <span class="co">#create a variable called degree to store the best polynomial degree.</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a>        best_degree <span class="op">=</span> degree</span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a>    plt.plot(x_data, poly_data, <span class="st">"-"</span>, label<span class="op">=</span><span class="st">"poly fit, degree="</span><span class="op">+</span><span class="bu">str</span>(degree))</span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#print our best degree polynomial</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best degree was"</span>,best_degree,<span class="st">"with poly error="</span>,best)</span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a>plt.xlabel(<span class="st">"mass g"</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a>plt.ylabel(<span class="st">"depth mm"</span>)</span>
+<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a>plt.legend(ncol<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<figure><img src="../fig/polynomial_comparison.png" alt="Comparison of several polynomial fits to the data." class="figure mx-auto d-block"></figure>
 </div>
 </div>
 </div>
@@ -1160,10 +1201,10 @@ functions? Is the spline model better than the polynomial model?</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>spline_features <span class="op">=</span>  SplineTransformer(n_knots<span class="op">=</span><span class="dv">3</span>, degree<span class="op">=</span><span class="dv">2</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>spline_features <span class="op">=</span>  SplineTransformer(n_knots<span class="op">=</span><span class="dv">3</span>, degree<span class="op">=</span><span class="dv">2</span>)</span></code></pre>
 </div>
 <p>The above line replaces the <code>PolynomialFeatures</code> function.
 It takes in an additional argument <code>knots</code> compared to
@@ -2805,7 +2846,7 @@ might you use to select the best one?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The silouette score, unfortunately, incorrectly identifies N=2 as the
 most approprirate clustering configuration in this case (silhouette =
@@ -2864,7 +2905,7 @@ any strange behaviour?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Increasing n_samples to 4000 and cluster_std to 3.0 looks like this:
 <img src="../fig/kmeans_overlapping_clusters.png" alt="Kmeans attempting to classify overlapping clusters" class="figure"> The straight
@@ -2986,7 +3027,7 @@ real)?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>KMeans version: runtime around 4 seconds (your computer might be
 faster/slower)</p>
@@ -3226,7 +3267,7 @@ for relations (written “row_column”): 0_4, 1_4, 2_4, and 3_4.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3481,7 +3522,7 @@ between the digits?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4670,8 +4711,8 @@ techniques are constantly appearing.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/aio.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/instructor/aio.html",
   "dateCreated": "2019-04-04",
-  "dateModified": "2026-02-05",
-  "datePublished": "2026-02-05"
+  "dateModified": "2026-02-06",
+  "datePublished": "2026-02-06"
 }
 
   </script><script>
