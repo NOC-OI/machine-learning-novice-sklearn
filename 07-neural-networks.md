@@ -276,13 +276,13 @@ Create an image using Microsoft Paint, the GNU Image Manipulation Project (GIMP)
 
 Try to draw a digit (0-9) in the image and save it into your code directory.
 
-The code below loads the image (called digit.png, change to whatever your file is called) using the OpenCV library. Some Anaconda installations need this installed either through the package manager or by running the command: `conda install -c conda-forge opencv ` from the anaconda terminal.
+The code below loads the image (called digit.png, change to whatever your file is called) using the scikit-image library.
 
-OpenCV assumes that images are 3 channel red, green, blue and we have to convert to one channel grayscale with `cvtColor`.
+Scikit-image assumes that images are 3 channel red, green, blue and we have to convert to one channel grayscale with the `color.rgb2gray` function.
 
-We also need to normalise the image by dividing each pixel by 255.
+We also need to normalise the image by dividing each pixel by 255, so it's values are between 0 and 1 not 0 and 255.
 
-To verify the image, we can plot it by using OpenCV's `imshow` function (we could also use Matplotlib's `matshow` function).
+To verify the image, we can plot it by using Matplotlib's `imshow` function.
 
 To check what digit it is, we can pass it into `mlp.predict`, but we have to convert it from a 28x28 array to a one dimensional 784-byte long array with the `reshape` function.
 
@@ -290,10 +290,10 @@ Did it correctly classify your hand(mouse) writing? Try a few images.
 If you have time try drawing images on a touch screen or taking a photo of something you have really written by hand. Remember that you will have to resize it to be 28x28 pixels.
 
 ```python
-import cv2
+import skimage as ski
 import matplotlib.pyplot as plt
-digit = cv2.imread("digit.png")
-digit_gray = cv2.cvtColor(digit, cv2.COLOR_BGR2GRAY)
+digit = ski.io.imread("digit.png")
+digit_gray = ski.color.rgb2gray(digit)
 digit_norm = digit_gray/255.0
 plt.imshow("Normalised Digit",digit_norm)
 plt.show()
