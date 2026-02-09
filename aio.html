@@ -3299,7 +3299,7 @@ for relations (written “row_column”): 0_4, 1_4, 2_4, and 3_4.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3554,7 +3554,7 @@ between the digits?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3640,7 +3640,7 @@ that is more general than PCA</li>
 </div>
 </section></section><section id="aio-07-neural-networks"><p>Content from <a href="07-neural-networks.html">Neural Networks</a></p>
 <hr>
-<p>Last updated on 2026-02-04 |
+<p>Last updated on 2026-02-09 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/07-neural-networks.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -4215,7 +4215,7 @@ correct.</p>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    image <span class="op">=</span> row.reshape(<span class="dv">1</span>,<span class="dv">784</span>)</span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    prediction <span class="op">=</span> mlp.predict(image)[<span class="dv">0</span>]</span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    actual <span class="op">=</span> Y_test[idx]</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    actual <span class="op">=</span> y_test[idx]</span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    <span class="cf">if</span> prediction <span class="op">==</span> actual:</span>
 <span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>        correct <span class="op">=</span> correct <span class="op">+</span> <span class="dv">1</span></span>
@@ -4393,17 +4393,26 @@ this layer can be found at <a href="https://www.kdnuggets.com/2016/02/scikit-flo
 based Application Programming Interfaces (APIs) where you can upload an
 image and have them return you the result. Most of these services rely
 on a large pre-trained (and often proprietary) neural network.</p>
-<blockquote>
-<h2 id="exercise-try-cloud-image-classification">Exercise: Try cloud
-image classification</h2>
+<div id="exercise-try-cloud-image-classification" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-try-cloud-image-classification" class="callout-inner">
+<h3 class="callout-title">Exercise: Try cloud image classification</h3>
+<div class="callout-content">
 <p>Take a photo with your phone camera or find an image online of a
 common daily scene. Upload it to <a href="Google's%20Cloud%20Vision%20API">https://cloud.google.com/vision/</a>
 (scroll down to the “demo” section about 1/3rd of the way down the
-page). How many objects has it correctly classified? How many did it
-incorrectly classify? Another example is this instance of the YOLOv12
-image recognition neural network hosted by <a href="HuggingFace">https://huggingface.co/spaces/sunsmarterjieleaf/yolov12</a>.
-Try the same image here, how do the results compare to Google?</p>
-</blockquote>
+page).</p>
+<p>How many objects has it correctly classified? How many did it
+incorrectly classify?</p>
+<p>Another example is this instance of the YOLOv12 image recognition
+neural network hosted by <a href="HuggingFace">https://huggingface.co/spaces/sunsmarterjieleaf/yolov12</a>.</p>
+<p>Try the same image here, how do the results compare to Google?</p>
+</div>
+</div>
+</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -4605,7 +4614,7 @@ negatives.</li>
 </div>
 </section></section><section id="aio-09-learn-more"><p>Content from <a href="09-learn-more.html">Find out more</a></p>
 <hr>
-<p>Last updated on 2026-02-04 |
+<p>Last updated on 2026-02-09 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/09-learn-more.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -4662,12 +4671,18 @@ game.</p>
 <li><p><a href="https://vas3k.com/blog/machine_learning/" class="external-link">Machine
 Learning for Everyone</a> - A useful overview of many different machine
 learning techniques, all introduced in an easy to follow way.</p></li>
+<li><p><a href="https://inria.github.io/scikit-learn-mooc/" class="external-link">Scikit
+Learn’s MOOC</a> - A MOOC (Massive Open Online Course) from Scikit Learn
+covering Scikit Learn in much more detail than this course!</p></li>
+<li><p><a href="https://carpentries-lab.github.io/deep-learning-intro/" class="external-link">Carpentries
+Deep Learning Course</a> - Another Carpentries course on deep learning
+using the Keras library.</p></li>
+<li><p><a href="https://carpentries-incubator.github.io/machine-learning-responsible-python/" class="external-link">Carpentries
+Responsible Machine Learning Course</a> - A Carpentries course focusing
+on the ethics of machine learning.</p></li>
 <li><p><a href="https://developers.google.com/machine-learning/crash-course/" class="external-link">Google
-machine learning crash course</a> - A quick course from Google on how to
+Machine Learning Crash Course</a> - A quick course from Google on how to
 use some of their machine learning products.</p></li>
-<li><p><a href="https://research.fb.com/the-facebook-field-guide-to-machine-learning-video-series/" class="external-link">Facebook
-Field Guide to Machine Learning</a> - A good introduction to machine
-learning concepts from Facebook.</p></li>
 <li><p><a href="https://docs.aws.amazon.com/machine-learning/latest/dg/amazon-machine-learning-key-concepts.html" class="external-link">Amazon
 Machine Learning guide</a> - An introduction to the key concepts in
 machine learning from Amazon.</p></li>
