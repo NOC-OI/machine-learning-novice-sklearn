@@ -366,7 +366,7 @@ For a linear SVM, the trainable parameters are:
   - **Why SVM**: SVMs excel in high-dimensional spaces because the kernel trick allows them to separate classes even in complex feature spaces without explicitly mapping the data.
   - **Why Not Decision Tree**: Decision trees struggle with high-dimensional data as the number of potential splits grows exponentially, leading to overfitting or underperformance.
 
-2. **Accuracy over Interpretbaility**:
+2. **Accuracy over Interpretability**:
   
   - **Why SVM**: SVMs are often considered black-box models, focusing on accuracy rather than interpretability.
   - **Why Not Decision Tree**: Decision trees are typically interpretable, making them better if you need to explain your model.
