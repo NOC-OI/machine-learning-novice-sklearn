@@ -358,7 +358,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Supervised methods - Classification</h1>
-        <p>Last updated on 2026-02-04 |
+        <p>Last updated on 2026-02-09 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/03-classification.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -706,9 +706,15 @@ to correctly classify every point in the training data.</p>
 <p>This is a classic case of over-fitting - our model has produced
 extremely specific parameters that work for the training data but are
 not representitive of our test data. Sometimes simplicity is better!</p>
-<blockquote>
-<h3 id="exercise-bias-variance-tradeoff-optional">Exercise:
-Bias-Variance tradeoff (optional)</h3>
+<div id="exercise-bias-variance-tradeoff-optional" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-bias-variance-tradeoff-optional" class="callout-inner">
+<h3 class="callout-title">Exercise: Bias-Variance tradeoff
+(optional)</h3>
+<div class="callout-content">
 <p>Typically, as we initially transition from simple to more complex
 models (e.g., depth of 1 -&gt; 2), we’ll see an increase in model
 performance (test set accuracy). However, beyond a certain point of
@@ -725,10 +731,10 @@ continue to add depth to our tree?</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>max_depths <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">30</span>)) </span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>accuracy <span class="op">=</span> []</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="cf">for</span> d <span class="kw">in</span> max_depths:</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>d, random_state<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  clf.fit(X_train, y_train)</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  acc <span class="op">=</span> clf.score(X_test, y_test)</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  accuracy.append((d, acc))</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>   clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>d, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>   clf.fit(X_train, y_train)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>   acc <span class="op">=</span> clf.score(X_test, y_test)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>   accuracy.append((d, acc))</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>acc_df <span class="op">=</span> pd.DataFrame(accuracy, columns<span class="op">=</span>[<span class="st">'depth'</span>, <span class="st">'accuracy'</span>])</span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
@@ -806,7 +812,9 @@ code. How does this impact the ideal setting for depth level?</p>
 <span id="cb13-54"><a href="#cb13-54" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
 <span id="cb13-55"><a href="#cb13-55" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
-</blockquote>
+</div>
+</div>
+</div>
 </section><section><h2 class="section-heading" id="classification-using-support-vector-machines">Classification using support vector machines<a class="anchor" aria-label="anchor" href="#classification-using-support-vector-machines"></a></h2>
 <hr class="half-width"><p>Next, we’ll look at another commonly used classification algorithm,
 and see how it compares. Support Vector Machines (SVM) work in a way
@@ -1044,7 +1052,7 @@ that is appropriate for your problem and data trends!</p>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/03-classification.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/03-classification.html",
   "dateCreated": "2019-04-04",
-  "dateModified": "2026-02-04",
+  "dateModified": "2026-02-09",
   "datePublished": "2026-02-09"
 }
 

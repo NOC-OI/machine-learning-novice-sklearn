@@ -1266,7 +1266,7 @@ data.</li>
 </div>
 </section></section><section id="aio-03-classification"><p>Content from <a href="03-classification.html">Supervised methods - Classification</a></p>
 <hr>
-<p>Last updated on 2026-02-04 |
+<p>Last updated on 2026-02-09 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/03-classification.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
@@ -1625,9 +1625,15 @@ to correctly classify every point in the training data.</p>
 <p>This is a classic case of over-fitting - our model has produced
 extremely specific parameters that work for the training data but are
 not representitive of our test data. Sometimes simplicity is better!</p>
-<blockquote>
-<h3 id="exercise-bias-variance-tradeoff-optional">Exercise:
-Bias-Variance tradeoff (optional)</h3>
+<div id="exercise-bias-variance-tradeoff-optional" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="exercise-bias-variance-tradeoff-optional" class="callout-inner">
+<h3 class="callout-title">Exercise: Bias-Variance tradeoff
+(optional)</h3>
+<div class="callout-content">
 <p>Typically, as we initially transition from simple to more complex
 models (e.g., depth of 1 -&gt; 2), we’ll see an increase in model
 performance (test set accuracy). However, beyond a certain point of
@@ -1644,10 +1650,10 @@ continue to add depth to our tree?</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>max_depths <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">30</span>)) </span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>accuracy <span class="op">=</span> []</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="cf">for</span> d <span class="kw">in</span> max_depths:</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>d, random_state<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  clf.fit(X_train, y_train)</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  acc <span class="op">=</span> clf.score(X_test, y_test)</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  accuracy.append((d, acc))</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>   clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>d, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>   clf.fit(X_train, y_train)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>   acc <span class="op">=</span> clf.score(X_test, y_test)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>   accuracy.append((d, acc))</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>acc_df <span class="op">=</span> pd.DataFrame(accuracy, columns<span class="op">=</span>[<span class="st">'depth'</span>, <span class="st">'accuracy'</span>])</span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
@@ -1727,7 +1733,9 @@ code. How does this impact the ideal setting for depth level?</p>
 <span id="cb13-54"><a href="#cb13-54" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
 <span id="cb13-55"><a href="#cb13-55" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
-</blockquote>
+</div>
+</div>
+</div>
 </section><section><h2 class="section-heading" id="classification-using-support-vector-machines">Classification using support vector machines<a class="anchor" aria-label="anchor" href="#classification-using-support-vector-machines"></a>
 </h2>
 <hr class="half-width">
@@ -2878,7 +2886,7 @@ might you use to select the best one?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The silouette score, unfortunately, incorrectly identifies N=2 as the
 most approprirate clustering configuration in this case (silhouette =
@@ -2937,7 +2945,7 @@ any strange behaviour?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Increasing n_samples to 4000 and cluster_std to 3.0 looks like this:
 <img src="../fig/kmeans_overlapping_clusters.png" alt="Kmeans attempting to classify overlapping clusters" class="figure"> The straight
@@ -3059,7 +3067,7 @@ real)?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>KMeans version: runtime around 4 seconds (your computer might be
 faster/slower)</p>
@@ -3299,7 +3307,7 @@ for relations (written “row_column”): 0_4, 1_4, 2_4, and 3_4.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3554,7 +3562,7 @@ between the digits?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
