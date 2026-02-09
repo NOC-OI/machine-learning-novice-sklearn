@@ -174,7 +174,7 @@ We can see that rather than clean lines between species, the decision tree produ
 
 ### Visualising the classification space
 
-We can visualise the classification space (decision tree boundaries) to get a more intuitive feel for what it is doing.Note that our 2D plot can only show two parameters at a time, so we will quickly visualise by training a new model on only 2 features:
+We can visualise the classification space (decision tree boundaries) to get a more intuitive feel for what it is doing. Note that our 2D plot can only show two parameters at a time, so we will quickly visualise by training a new model on only 2 features:
 
 ```python
 from sklearn.inspection import DecisionBoundaryDisplay
