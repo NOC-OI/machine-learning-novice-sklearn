@@ -314,7 +314,7 @@ for idx, row in enumerate(X_test):
     image = row.reshape(1,784)
 
     prediction = mlp.predict(image)[0]
-    actual = Y_test[idx]
+    actual = y_test[idx]
 
     if prediction == actual:
         correct = correct + 1
