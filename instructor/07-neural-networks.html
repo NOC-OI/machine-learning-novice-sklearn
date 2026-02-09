@@ -815,17 +815,14 @@ and the text white.</p>
 <p>Try to draw a digit (0-9) in the image and save it into your code
 directory.</p>
 <p>The code below loads the image (called digit.png, change to whatever
-your file is called) using the OpenCV library. Some Anaconda
-installations need this installed either through the package manager or
-by running the command: <code>conda install -c conda-forge opencv</code>
-from the anaconda terminal.</p>
-<p>OpenCV assumes that images are 3 channel red, green, blue and we have
-to convert to one channel grayscale with <code>cvtColor</code>.</p>
-<p>We also need to normalise the image by dividing each pixel by
-255.</p>
-<p>To verify the image, we can plot it by using OpenCV’s
-<code>imshow</code> function (we could also use Matplotlib’s
-<code>matshow</code> function).</p>
+your file is called) using the scikit-image library.</p>
+<p>Scikit-image assumes that images are 3 channel red, green, blue and
+we have to convert to one channel grayscale with the
+<code>color.rgb2gray</code> function.</p>
+<p>We also need to normalise the image by dividing each pixel by 255, so
+it’s values are between 0 and 1 not 0 and 255.</p>
+<p>To verify the image, we can plot it by using Matplotlib’s
+<code>imshow</code> function.</p>
 <p>To check what digit it is, we can pass it into
 <code>mlp.predict</code>, but we have to convert it from a 28x28 array
 to a one dimensional 784-byte long array with the <code>reshape</code>
@@ -837,10 +834,10 @@ have to resize it to be 28x28 pixels.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">import</span> skimage <span class="im">as</span> ski</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>digit <span class="op">=</span> cv2.imread(<span class="st">"digit.png"</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>digit_gray <span class="op">=</span> cv2.cvtColor(digit, cv2.COLOR_BGR2GRAY)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>digit <span class="op">=</span> ski.io.imread(<span class="st">"digit.png"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>digit_gray <span class="op">=</span> ski.color.rgb2gray(digit)</span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>digit_norm <span class="op">=</span> digit_gray<span class="op">/</span><span class="fl">255.0</span></span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>plt.imshow(<span class="st">"Normalised Digit"</span>,digit_norm)</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>plt.show()</span>
