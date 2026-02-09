@@ -889,16 +889,15 @@ the Root Mean Squared Error (RMSE) of our predictions:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Predict some values using our trained estimator/model.</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># In this case we predict our input data to evaluate accuracy!</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>linear_data <span class="op">=</span> lin_regress.predict(x_data)</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># calculated a RMS error as a quality of fit metric</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>error <span class="op">=</span> math.sqrt(mean_squared_error(y_data, linear_data))</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"linear error="</span>,error)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> root_mean_squared_error</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># Predict some values using our trained estimator/model.</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># In this case we predict our input data to evaluate accuracy!</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>linear_data <span class="op">=</span> lin_regress.predict(x_data)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># calculated a RMS error as a quality of fit metric</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>error <span class="op">=</span> root_mean_squared_error(y_data, linear_data)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"linear error="</span>,error)</span></code></pre>
 </div>
 <p>Finally, we’ll plot our input data, our linear fit, and our
 predictions:</p>
@@ -2879,7 +2878,7 @@ might you use to select the best one?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The silouette score, unfortunately, incorrectly identifies N=2 as the
 most approprirate clustering configuration in this case (silhouette =
@@ -2938,7 +2937,7 @@ any strange behaviour?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Increasing n_samples to 4000 and cluster_std to 3.0 looks like this:
 <img src="fig/kmeans_overlapping_clusters.png" alt="Kmeans attempting to classify overlapping clusters" class="figure"> The straight
@@ -3060,7 +3059,7 @@ real)?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>KMeans version: runtime around 4 seconds (your computer might be
 faster/slower)</p>
