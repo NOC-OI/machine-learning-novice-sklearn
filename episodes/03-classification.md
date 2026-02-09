@@ -8,7 +8,7 @@ exercises: 0
 
 - Use two different supervised methods to classify data.
 - Learn about the concept of hyper-parameters.
-- Learn to validate and ?cross-validate? models
+- Learn to validate and cross-validate models
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
