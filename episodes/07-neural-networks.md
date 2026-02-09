@@ -442,15 +442,25 @@ Scikit-Learn is not really setup for deep learning. We will have to rely on othe
 
 Google, Microsoft, Amazon, and many other companys now have cloud based Application Programming Interfaces (APIs) where you can upload an image and have them return you the result. Most of these services rely on a large pre-trained (and often proprietary) neural network.
 
-> ## Exercise: Try cloud image classification
-> 
-> Take a photo with your phone camera or find an image online of a common daily scene.
-> Upload it to [https://cloud.google.com/vision/](Google's Cloud Vision API)
-> (scroll down to the "demo" section about 1/3rd of the way down the page).
-> How many objects has it correctly classified? How many did it incorrectly classify?
-> Another example is this instance of the YOLOv12 image recognition neural network
-> hosted by [https://huggingface.co/spaces/sunsmarterjieleaf/yolov12](HuggingFace).
-> Try the same image here, how do the results compare to Google?
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise: Try cloud image classification
+
+Take a photo with your phone camera or find an image online of a common daily scene.
+Upload it to [https://cloud.google.com/vision/](Google's Cloud Vision API)
+(scroll down to the "demo" section about 1/3rd of the way down the page).
+
+How many objects has it correctly classified? 
+How many did it incorrectly classify?
+
+Another example is this instance of the YOLOv12 image recognition neural network
+hosted by [https://huggingface.co/spaces/sunsmarterjieleaf/yolov12](HuggingFace).
+
+Try the same image here, how do the results compare to Google?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 
 
