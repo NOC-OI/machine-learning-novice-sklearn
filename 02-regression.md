@@ -137,15 +137,14 @@ print("linear coefs=",m, c)
 Now we can make predictions using our trained model, and calculate the Root Mean Squared Error (RMSE) of our predictions:
 
 ```python
-import math
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 
 # Predict some values using our trained estimator/model.
 # In this case we predict our input data to evaluate accuracy!
 linear_data = lin_regress.predict(x_data)
 
 # calculated a RMS error as a quality of fit metric
-error = math.sqrt(mean_squared_error(y_data, linear_data))
+error = root_mean_squared_error(y_data, linear_data)
 print("linear error=",error)
 ```
 
