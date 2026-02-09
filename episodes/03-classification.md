@@ -8,7 +8,7 @@ exercises: 0
 
 - Use two different supervised methods to classify data.
 - Learn about the concept of hyper-parameters.
-- Learn to validate and ?cross-validate? models
+- Learn to validate and cross-validate models
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -174,7 +174,7 @@ We can see that rather than clean lines between species, the decision tree produ
 
 ### Visualising the classification space
 
-We can visualise the classification space (decision tree boundaries) to get a more intuitive feel for what it is doing.Note that our 2D plot can only show two parameters at a time, so we will quickly visualise by training a new model on only 2 features:
+We can visualise the classification space (decision tree boundaries) to get a more intuitive feel for what it is doing. Note that our 2D plot can only show two parameters at a time, so we will quickly visualise by training a new model on only 2 features:
 
 ```python
 from sklearn.inspection import DecisionBoundaryDisplay
@@ -366,7 +366,7 @@ For a linear SVM, the trainable parameters are:
   - **Why SVM**: SVMs excel in high-dimensional spaces because the kernel trick allows them to separate classes even in complex feature spaces without explicitly mapping the data.
   - **Why Not Decision Tree**: Decision trees struggle with high-dimensional data as the number of potential splits grows exponentially, leading to overfitting or underperformance.
 
-2. **Accuracy over Interpretbaility**:
+2. **Accuracy over Interpretability**:
   
   - **Why SVM**: SVMs are often considered black-box models, focusing on accuracy rather than interpretability.
   - **Why Not Decision Tree**: Decision trees are typically interpretable, making them better if you need to explain your model.

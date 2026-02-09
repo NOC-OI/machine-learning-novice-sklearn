@@ -55,7 +55,7 @@ We're going to be using the penguins dataset of Allison Horst, published [here](
 The physical attributes measured are flipper length, beak length, beak width, body mass, and sex.
 ![](fig/culmen_depth.png){alt='Artwork by @allison\_horst'}
 
-In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
+In other words, the dataset contains 344 rows with 7 features, i.e. 5 physical attributes, species and the island where the observations were made.
 
 The penguin dataset is available through the Python plotting library [Seaborn](https://seaborn.pydata.org/). Let's start by loading in and examining this dataset, which contains a few hundred samples and a number of features and labels.
 
@@ -95,7 +95,7 @@ plt.show()
 
 In this regression example we will create a Linear Regression model that will try to predict `y` values based upon `x` values.
 
-In machine learning terminology: we will use our `x` feature (variable) and `y` labels("answers") to train our Linear Regression model to predict `y` values when provided with `x` values.
+In machine learning terminology: we will use our `x` feature (variable) and `y` labels ("answers") to train our Linear Regression model to predict `y` values when provided with `x` values.
 
 The mathematical equation for a linear fit is `y = mx + c` where `y` is our label data, `x` is our input feature(s), `m` represents the gradient of the linear fit, and `c` represents the intercept with the y-axis.
 
