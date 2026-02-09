@@ -357,7 +357,7 @@ plt.show()
 
 ### Exercise: Now try using the SplineTransformer to create a spline model
 
-The SplineTransformer is another pre-processing function that behaves in a similar way to the PolynomialFeatures function. Adjust your
+The SplineTransformer is another pre-processing function that behaves in a similar way to the PolynomialFeatures function. Import the package `sklearn.preprocessing.SplinTransformer` and adjust your
 previous code to use the SplineTransformer. Can you improve the RMSE of your model by varying the `knots` and `degree` functions? Is the spline model better than the polynomial model?
 
 :::::::::::::::  solution
@@ -365,13 +365,48 @@ previous code to use the SplineTransformer. Can you improve the RMSE of your mod
 ### Solution
 
 ```python
-spline_features =  SplineTransformer(n_knots=3, degree=2)
+from sklearn.preprocessing import SplineTransformer
+
+#plot the data
+plt.scatter(x_data, y_data, label="all data")
+plt.scatter(x_data_subset, y_data_subset, label="subset data")
+
+#name a variable 'best' to store the best RMSE we find.
+best = np.inf
+
+#loop through and plotpolynomials of degree one to nine, 
+#reusing the earlier code.
+for knot in range(2,5):
+    for degree in range(1,10):
+        spline_features =  SplineTransformer(n_knots=knot, degree=degree)
+        x_spline = spline_features.fit_transform(x_data_subset)
+        # Define our estimator/model(s) and train our model
+        spline_regress = LinearRegression()
+        spline_regress.fit(x_spline,y_data_subset)
+        # make predictions using all data, pre-process data too
+        x_spline_all = spline_features.fit_transform(x_data)
+        spline_data = spline_regress.predict(x_spline_all)
+        
+        spline_error = math.sqrt(mean_squared_error(y_data, spline_data))
+        print("degree=",degree,"; slpine error=", spline_error)
+    
+        #find best degree polynomial
+        if spline_error < best:
+            best = spline_error
+            #create a variable called degree to store the best polynomial degree.
+            best_degree = degree
+            best_knot = knot
+        plt.plot(x_data, spline_data, "-", label="spline fit, degree="+str(degree)+" knot="+str(knot))
+
+#print our best degree polynomial
+print("Best degree/knot was",best_degree,best_knot,"with poly error=",best)
+plt.xlabel("mass g")
+plt.ylabel("depth mm")
+plt.legend(ncol=4)
+plt.show()
 ```
 
-The above line replaces the `PolynomialFeatures` function. It takes in an additional argument `knots` compared to `PolynomialFeatures`.
-ADD LINES OR FIGURES TO EXPLORE THIS.
-SOME COMMENT ON FITS AND MODEL COMPARISON.
-
+The above line replaces the `PolynomialFeatures` function. It takes in an additional argument `knots` compared to `PolynomialFeatures`. It's best performance is comparable to that of the `PolynomialFeatures` in this example (error of 1.613 fo SplineTransformer and 1.604 for PolynomialFeatures).
 
 
 :::::::::::::::::::::::::
