@@ -12,3 +12,4 @@ dependencies:
     - matplotlib-inline
     - scikit-learn
     - scikit-image
+    - pandas
