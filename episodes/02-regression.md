@@ -57,16 +57,7 @@ The physical attributes measured are flipper length, beak length, beak width, bo
 
 In other words, the dataset contains 344 rows with 7 features i.e. 5 physical attributes, species and the island where the observations were made.
 
-The penguin dataset is available through the Python plotting library [Seaborn](https://seaborn.pydata.org/).
-
-```python
-import seaborn as sns
-
-dataset = sns.load_dataset('penguins')
-dataset.head()
-```
-
-Let's start by loading in and examining the penguin dataset, which containing a few hundred samples and a number of features and labels.
+The penguin dataset is available through the Python plotting library [Seaborn](https://seaborn.pydata.org/). Let's start by loading in and examining this dataset, which contains a few hundred samples and a number of features and labels.
 
 ```python
 import seaborn as sns
