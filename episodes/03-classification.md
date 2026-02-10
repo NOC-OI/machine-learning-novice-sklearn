@@ -193,9 +193,15 @@ plt.show()
 
 ![](fig/e3_dt_space_2.png){alt='Classification space for our decision tree'}
 
-## Tuning the `max_depth` hyperparameter
 
-Our decision tree using a `max_depth=2` is fairly simple and there are still some incorrect predictions in our final classifications. Let's try varying the `max_depth` hyperparameter to see if we can improve our model predictions.
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise: Tuning the max_depth hyperparameter
+
+Our decision tree using a `max_depth=2` is fairly simple and there are still some incorrect predictions in our final classifications. 
+Try varying the `max_depth` hyperparameter to see if you can improve our model predictions.
+
+:::::::::::::::  solution
 
 <!-- We can reduce the over-fitting of our decision tree model by limiting its depth, forcing it to use less decisions to produce a classification, and resulting in a simpler decision space. -->
 
@@ -222,9 +228,23 @@ plt.show()
 
 ![](fig/e3_dt_overfit.png){alt='Performance of decision trees of various depths'}
 
-Here we can see that a `max_depth=2` performs slightly better on the test data than those with `max_depth > 2`. This can seem counter intuitive, as surely more questions should be able to better split up our categories and thus give better predictions?
+Here we can see that a `max_depth=2` performs slightly better on the test data than those with `max_depth > 2`.
 
-Let's reuse our fitting and plotting codes from above to inspect a decision tree that has `max_depth=5`:
+::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise: Why do deeper trees reduce performance?
+
+It can seem counter intuitive that making a deeper tree reduces performance, as surely more questions should be able to better split up our categories and thus give better predictions?
+
+Reuse the fitting and plotting code from above to inspect a decision tree that has `max_depth=5`. 
+What differences do you see in this plot compared to the `max_depth=2` plot? What does this tell you about the tree trained on `max_depth=5`?
+
+:::::::::::::::  solution
 
 ```python
 clf = DecisionTreeClassifier(max_depth=5, random_state=0)
@@ -237,7 +257,9 @@ plt.show()
 
 ![](fig/e3_dt_6.png){alt='Simplified decision tree'}
 
-It looks like our decision tree has split up the training data into the correct penguin categories and more accurately than the `max_depth=2` model did, however it used some very specific questions to split up the penguins into the correct categories. Let's try visualising the classification space for a more intuitive understanding:
+It looks like our decision tree has split up the training data into the correct penguin categories and more accurately than the `max_depth=2` model did, however it used some very specific questions to split up the penguins into the correct categories. 
+
+By visualising the classification space we can get a more intuitive understanding:
 
 ```python
 f1 = feature_names[0]
@@ -257,6 +279,10 @@ plt.show()
 Earlier we saw that the `max_depth=2` model split the data into 3 simple bounding boxes, whereas for `max_depth=5` we see the model has created some very specific classification boundaries to correctly classify every point in the training data.
 
 This is a classic case of over-fitting - our model has produced extremely specific parameters that work for the training data but are not representitive of our test data. Sometimes simplicity is better!
+
+::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -449,7 +475,14 @@ While this SVM model performs slightly worse than our decision tree (95.6% vs. 9
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Classification requires labelled data (is supervised)
+- Classifiers built with supervised techniques require labelled data to train on.
+- We usually split our data into training and test sets with 80% of the data used for training and 20% used to test it.
+- We must be careful that our training and test sets have similar characteristics.
+- Decision trees are a simple method of classification that can work well on simpler data.
+- Hyper parameters are parameters which affect the behaviour of training a model.
+- Tree depth in a decision tree is an example of a hyper parameter.
+- Support vector machines work well on more complex data with non-linear boundaries.
+- Support vector machines use a "kernel trick" to transition data into a higher dimensional space.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
