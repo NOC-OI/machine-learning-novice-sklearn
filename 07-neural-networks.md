@@ -141,7 +141,11 @@ A single perceptron cannot be used to solve a non-linearly separable function. F
 
 ### Training multi-layer perceptrons
 
-Multi-layer perceptrons need to be trained by showing them a set of training data and measuring the error between the network's predicted output and the true value. Training takes an iterative approach that improves the network a little each time a new training example is presented. There are a number of training algorithms available for a neural network today, but we are going to use one of the best established and well known, the backpropagation algorithm. This algorithm is called back propagation because it takes the error calculated between an output of the network and the true value and takes it back through the network to update the weights. If you want to read more about back propagation, please see [this chapter](https://page.mi.fu-berlin.de/rojas/neural/chapter/K7.pdf) from the book "Neural Networks - A Systematic Introduction".
+Multi-layer perceptrons need to be trained by showing them a set of training data and measuring the error between the network's predicted output and the true value. 
+Training takes an iterative approach that improves the network a little each time a new training example is presented. There are a number of training algorithms available 
+for a neural network today, but we are going to use one of the best established and well known, the backpropagation algorithm. This algorithm is called back propagation 
+because it takes the error calculated between an output of the network and the true value and takes it back through the network to update the weights. If you want to read 
+more about back propagation, please see [chapter 7](https://www.inf.fu-berlin.de/inst/ag-ki/rojas_home/documents/1996/NeuralNetworks/neuron.pdf) from the book "Neural Networks - A Systematic Introduction".
 
 ### Multi-layer perceptrons in Scikit-Learn
 
