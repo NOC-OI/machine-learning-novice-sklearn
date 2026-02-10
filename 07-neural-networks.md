@@ -447,14 +447,14 @@ Google, Microsoft, Amazon, and many other companys now have cloud based Applicat
 ## Exercise: Try cloud image classification
 
 Take a photo with your phone camera or find an image online of a common daily scene.
-Upload it to [https://cloud.google.com/vision/](Google's Cloud Vision API)
+Upload it to [Google's Cloud Vision API](https://cloud.google.com/vision/)
 (scroll down to the "demo" section about 1/3rd of the way down the page).
 
 How many objects has it correctly classified? 
 How many did it incorrectly classify?
 
 Another example is this instance of the YOLOv12 image recognition neural network
-hosted by [https://huggingface.co/spaces/sunsmarterjieleaf/yolov12](HuggingFace).
+hosted by [HuggingFace](https://huggingface.co/spaces/sunsmarterjieleaf/yolov12).
 
 Try the same image here, how do the results compare to Google?
 
