@@ -187,7 +187,7 @@ Typically, the majority of the data will be used as training data (70-90%), to h
 data.shape
 ```
 
-This tells us we have 70,000 rows in the dataset. Let us take 90% of the data for training and 10% for testing, so we will use the first 63,000 samples in the dataset as the training data and the last 7,000 as the test data.
+This tells us we have 70,000 rows in the dataset. Let us take 90% of the data for training and 10% for testing, so we will use 63,000 samples in the dataset as the training data and 7,000 as the test data.
 
 ```python
 from sklearn.model_selection import train_test_split
