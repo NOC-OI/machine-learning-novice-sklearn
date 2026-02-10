@@ -110,7 +110,7 @@ Machine learning is about creating models from data: for that reason, we'll star
 
 Most machine learning algorithms implemented in scikit-learn expect data to be stored in a two-dimensional array or matrix. The arrays can be either numpy arrays, or in some cases `scipy.sparse` matrices. The size of the array is expected to be [n\_samples, n\_features].
 
-We typically have a "Features Matrix" (usually referred to as the code variable `x`) which are the "features" data we wish to train on.
+We typically have a "Features Matrix" (usually referred to as the code variable `X`) which are the "features" data we wish to train on.
 
 - n\_samples: The number of samples. A sample can be a document, a picture, a sound, a video, an astronomical object, a row in database or CSV file, or whatever you can describe with a fixed set of quantitative traits.
 - n\_features: The number of features (variables) that can be used to describe each item in a quantitative manner. Features are generally real-valued, but may be boolean or discrete-valued in some cases.
