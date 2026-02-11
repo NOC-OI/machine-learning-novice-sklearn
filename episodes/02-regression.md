@@ -179,7 +179,7 @@ y_data_all = np.array(y_data_all).reshape(-1, 1)
 linear_data_all = lin_regress.predict(x_data_all)
 
 # calculated a RMS error for all data
-error_all = math.sqrt(mean_squared_error(y_data_all, linear_data_all))
+error_all = root_mean_squared_error(y_data_all, linear_data_all)
 print("linear error=",error_all)
 ```
 
@@ -276,7 +276,7 @@ We can now make predictions using our full dataset. As we did for our training d
 x_poly_all = poly_features.fit_transform(x_data)
 poly_data = poly_regress.predict(x_poly_all)
 
-poly_error = math.sqrt(mean_squared_error(y_data, poly_data))
+poly_error = root_mean_squared_error(y_data, poly_data)
 print("poly error=", poly_error)
 ```
 
@@ -327,7 +327,7 @@ for degree in range(1,10):
     x_poly_all = poly_features.fit_transform(x_data)
     poly_data = poly_regress.predict(x_poly_all)
     
-    poly_error = math.sqrt(mean_squared_error(y_data, poly_data))
+    poly_error = root_mean_squared_error(y_data, poly_data)
     print("degree=",degree,"; poly error=", poly_error)
 
     #find best degree polynomial
@@ -386,7 +386,7 @@ for knot in range(2,5):
         x_spline_all = spline_features.fit_transform(x_data)
         spline_data = spline_regress.predict(x_spline_all)
         
-        spline_error = math.sqrt(mean_squared_error(y_data, spline_data))
+        spline_error = root_mean_squared_error(y_data, spline_data)
         print("degree=",degree,"; slpine error=", spline_error)
     
         #find best degree polynomial
