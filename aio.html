@@ -688,7 +688,7 @@ computers show human-like intelligence.</li>
 </div>
 </section></section><section id="aio-02-regression"><p>Content from <a href="02-regression.html">Supervised methods - Regression</a></p>
 <hr>
-<p>Last updated on 2026-02-09 |
+<p>Last updated on 2026-02-11 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-novice-sklearn/edit/main/episodes/02-regression.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -933,7 +933,7 @@ our model performs on the full dataset:</p>
 <span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>linear_data_all <span class="op">=</span> lin_regress.predict(x_data_all)</span>
 <span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
 <span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co"># calculated a RMS error for all data</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>error_all <span class="op">=</span> math.sqrt(mean_squared_error(y_data_all, linear_data_all))</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>error_all <span class="op">=</span> root_mean_squared_error(y_data_all, linear_data_all)</span>
 <span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"linear error="</span>,error_all)</span></code></pre>
 </div>
 <p>Our RMSE for predictions on all penguin samples is far larger than
@@ -1078,7 +1078,7 @@ predictions.</p>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>x_poly_all <span class="op">=</span> poly_features.fit_transform(x_data)</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>poly_data <span class="op">=</span> poly_regress.predict(x_poly_all)</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>poly_error <span class="op">=</span> math.sqrt(mean_squared_error(y_data, poly_data))</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>poly_error <span class="op">=</span> root_mean_squared_error(y_data, poly_data)</span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"poly error="</span>, poly_error)</span></code></pre>
 </div>
 <p>Finally, let’s visualise our model fit on our training data and full
@@ -1142,7 +1142,7 @@ squared error of each polynomial fit and print the best.</p>
 <span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>    x_poly_all <span class="op">=</span> poly_features.fit_transform(x_data)</span>
 <span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>    poly_data <span class="op">=</span> poly_regress.predict(x_poly_all)</span>
 <span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>    </span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>    poly_error <span class="op">=</span> math.sqrt(mean_squared_error(y_data, poly_data))</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>    poly_error <span class="op">=</span> root_mean_squared_error(y_data, poly_data)</span>
 <span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"degree="</span>,degree,<span class="st">"; poly error="</span>, poly_error)</span>
 <span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a></span>
 <span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>    <span class="co">#find best degree polynomial</span></span>
@@ -1214,7 +1214,7 @@ functions? Is the spline model better than the polynomial model?</p>
 <span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a>        x_spline_all <span class="op">=</span> spline_features.fit_transform(x_data)</span>
 <span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a>        spline_data <span class="op">=</span> spline_regress.predict(x_spline_all)</span>
 <span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>        </span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>        spline_error <span class="op">=</span> math.sqrt(mean_squared_error(y_data, spline_data))</span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>        spline_error <span class="op">=</span> root_mean_squared_error(y_data, spline_data)</span>
 <span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"degree="</span>,degree,<span class="st">"; slpine error="</span>, spline_error)</span>
 <span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a>    </span>
 <span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a>        <span class="co">#find best degree polynomial</span></span>
@@ -3359,7 +3359,7 @@ for relations (written “row_column”): 0_4, 1_4, 2_4, and 3_4.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3614,7 +3614,7 @@ between the digits?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4808,8 +4808,8 @@ techniques are constantly appearing.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/aio.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-novice-sklearn/aio.html",
   "dateCreated": "2019-04-04",
-  "dateModified": "2026-02-10",
-  "datePublished": "2026-02-10"
+  "dateModified": "2026-02-11",
+  "datePublished": "2026-02-11"
 }
 
   </script><script>
